@@ -41,8 +41,7 @@ const getRandomInt = (min, max) => {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 };
 
-$("#submit").on("click", event => {
-  event.preventDefault();
+const doSubmit = () => {
   let name = $("#donator")
     .val()
     .trim();
@@ -66,12 +65,21 @@ $("#submit").on("click", event => {
   $("#donation-total").text(`Total Entries: ${flatArray.length}`);
   randomizeTimer();
   $("#pick-winner").prop("disabled", false);
-});
+};
 
-$("#pick-winner").on("click", event => {
-  event.preventDefault();
+const pickWinner = () => {
   let flatArray = raffleArray.flat(1);
   const random = randomize(flatArray);
   let winner = random[Math.floor(Math.random() * random.length)];
   $("#winner").text(`THE WINNER IS... ${winner}`);
+};
+
+$("#submit").on("click", event => {
+  event.preventDefault();
+  doSubmit();
+});
+
+$("#pick-winner").on("click", event => {
+  event.preventDefault();
+  pickWinner();
 });
