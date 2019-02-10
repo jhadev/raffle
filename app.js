@@ -13,13 +13,13 @@ const flatArray = [];
 
 const randomize = array => {
   for (let i = array.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
+    let j = Math.floor(Math.random() * (i + 1));
     [array[i], array[j]] = [array[j], array[i]];
   }
   return array;
 };
 
-const randomizeTimer = () => {
+const randomizeProgress = () => {
   let current_progress = 0;
   const interval = setInterval(function() {
     current_progress += getRandomInt(20, 50);
@@ -48,10 +48,11 @@ const doSubmit = () => {
   const entries = $("#entries")
     .val()
     .trim();
-  const newName = `${name} `;
+  const newName = `${name},`;
   const repeatedName = newName.repeat(entries);
-  const trimmedName = repeatedName.trim();
-  const fullEntry = trimmedName.split(" ");
+  const slicedName = repeatedName.slice(0, -1);
+  const fullEntry = slicedName.split(",");
+  console.log(fullEntry);
   raffleArray.push(fullEntry);
   $("#donator").val("");
   $("#entries").val("");
@@ -61,9 +62,10 @@ const doSubmit = () => {
     obj[item] = (obj[item] || 0) + 1;
     return obj;
   }, {});
-  $("#odds").text(`Entries: ${JSON.stringify(totalEntries)}`);
+  const final = JSON.stringify(totalEntries);
+  $("#odds").text(`Entries: ${final}`);
   $("#donation-total").text(`Total Entries: ${flatArray.length}`);
-  randomizeTimer();
+  randomizeProgress();
   $("#pick-winner").prop("disabled", false);
 };
 
