@@ -14,3 +14,9 @@ button {
 .alert {
   cursor: pointer;
 }
+
+@media screen and (max-width: 600px) {
+  .alert {
+    font-size: 10px;
+  }
+}
