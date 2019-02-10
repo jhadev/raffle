@@ -74,8 +74,9 @@ const doSubmit = () => {
       spanDiv.addClass("percentage").text(`${raffleOdds}, `);
       $("#chance").append(spanDiv);
     });
-    const final = JSON.stringify(totalEntries);
-    $("#odds").text(`Entries: ${final}`);
+    let final = JSON.stringify(totalEntries);
+    const slicedFinal = final.slice(1, -1);
+    $("#odds").text(`Entries: ${slicedFinal}`);
     $("#donation-total").text(`Total Entries: ${flatArray.length}`);
     $("#pick-winner").prop("disabled", false);
     $(".alert").alert("close");
