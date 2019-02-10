@@ -78,7 +78,6 @@ const doSubmit = () => {
       .addClass("mt-2 alert alert-danger")
       .attr("role", "alert")
       .attr("data-dismiss", "alert")
-      .css("font-size", 14)
       .text(`Please input a valid value. Click to dismiss.`);
     $(".form-group").append(alertDiv);
   }
