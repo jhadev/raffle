@@ -3,7 +3,7 @@ $(document).ready(function() {
 });
 
 function validate() {
-  $("#entries, #name").keyup(function() {
+  $("#entries, #donator").keyup(function() {
     if ($(this).val() == "") {
       $(".enable").prop("disabled", true);
     } else {
@@ -74,15 +74,14 @@ const doSubmit = () => {
     $("#pick-winner").prop("disabled", false);
     $(".alert").alert("close");
   } else {
-    $("#entries").val("");
+    $("#entries, #donator").val("");
     let alertDiv = $("<div>");
     alertDiv
       .addClass("mt-2 alert alert-danger")
       .attr("role", "alert")
       .attr("data-dismiss", "alert")
-      .text(`Please input a value`);
+      .text(`Please input a valid value`);
     $(".form-group").append(alertDiv);
-    $(".alert").alert("close");
   }
 };
 
