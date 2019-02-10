@@ -76,7 +76,9 @@ const doSubmit = () => {
     });
     let final = JSON.stringify(totalEntries);
     const slicedFinal = final.slice(1, -1);
-    $("#odds").text(`Entries: ${slicedFinal}`);
+    const replacedFinal = slicedFinal.replace(/\"/g, " ");
+    const trueFinal = replacedFinal.replace(/ :/g, ": ");
+    $("#odds").text(`Entries: ${trueFinal}`);
     $("#donation-total").text(`Total Entries: ${flatArray.length}`);
     $("#pick-winner").prop("disabled", false);
     $(".alert").alert("close");
