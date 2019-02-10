@@ -21,7 +21,7 @@ const randomize = array => {
 
 const randomizeTimer = () => {
   let current_progress = 0;
-  let interval = setInterval(function() {
+  const interval = setInterval(function() {
     current_progress += getRandomInt(20, 50);
     $("#dynamic")
       .css("width", current_progress + "%")
@@ -42,22 +42,22 @@ const getRandomInt = (min, max) => {
 };
 
 const doSubmit = () => {
-  let name = $("#donator")
+  const name = $("#donator")
     .val()
     .trim();
-  let entries = $("#entries")
+  const entries = $("#entries")
     .val()
     .trim();
-  let newName = `${name} `;
-  let repeatedName = newName.repeat(entries);
-  let trimmedName = repeatedName.trim();
-  let fullEntry = trimmedName.split(" ");
+  const newName = `${name} `;
+  const repeatedName = newName.repeat(entries);
+  const trimmedName = repeatedName.trim();
+  const fullEntry = trimmedName.split(" ");
   raffleArray.push(fullEntry);
   $("#donator").val("");
   $("#entries").val("");
   const flatArray = raffleArray.flat(1);
-  let randomizedArray = randomize(flatArray);
-  let totalEntries = randomizedArray.reduce(function(obj, item) {
+  const randomizedArray = randomize(flatArray);
+  const totalEntries = randomizedArray.reduce(function(obj, item) {
     obj[item] = (obj[item] || 0) + 1;
     return obj;
   }, {});
@@ -68,9 +68,9 @@ const doSubmit = () => {
 };
 
 const pickWinner = () => {
-  let flatArray = raffleArray.flat(1);
+  const flatArray = raffleArray.flat(1);
   const random = randomize(flatArray);
-  let winner = random[Math.floor(Math.random() * random.length)];
+  const winner = random[Math.floor(Math.random() * random.length)];
   $("#winner").text(`THE WINNER IS... ${winner}`);
 };
 
