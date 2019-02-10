@@ -24,15 +24,15 @@ const randomize = array => {
 };
 
 const randomizeProgress = () => {
-  let current_progress = 0;
+  let currentProgress = 0;
   const interval = setInterval(function() {
-    current_progress += getRandomInt(20, 50);
+    currentProgress += getRandomInt(20, 50);
     $("#dynamic")
-      .css("width", current_progress + "%")
-      .attr("aria-valuenow", current_progress)
+      .css("width", currentProgress + "%")
+      .attr("aria-valuenow", currentProgress)
       .text(`Randomizing Entries`)
       .addClass("progress-bar-animated");
-    if (current_progress >= 100) {
+    if (currentProgress >= 100) {
       clearInterval(interval);
       $("#dynamic")
         .text(`Entries Randomized`)
