@@ -46,6 +46,7 @@ const getRandomInt = (min, max) => {
 };
 
 const doSubmit = () => {
+  $("#chance").empty();
   const name = $("#donator")
     .val()
     .trim();
@@ -65,6 +66,14 @@ const doSubmit = () => {
       obj[item] = (obj[item] || 0) + 1;
       return obj;
     }, {});
+    let entryValues = Object.values(totalEntries);
+    entryValues.forEach(entry => {
+      let raffleOdds = ((entry / flatArray.length) * 100).toFixed(2) + "%";
+      let spanDiv = $("<span>");
+      spanDiv.addClass("percentage").text(`${raffleOdds}, `);
+      $("#chance").append(spanDiv);
+    });
+
     const final = JSON.stringify(totalEntries);
     $("#odds").text(`Entries: ${final}`);
     $("#donation-total").text(`Total Entries: ${flatArray.length}`);
