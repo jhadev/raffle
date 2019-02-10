@@ -57,10 +57,8 @@ const doSubmit = () => {
     const repeatedName = newName.repeat(entries);
     const slicedName = repeatedName.slice(0, -1);
     const fullEntry = slicedName.split(",");
-    console.log(fullEntry);
     raffleArray.push(fullEntry);
-    $("#donator").val("");
-    $("#entries").val("");
+    $("#donator, #entries").val("");
     const flatArray = raffleArray.flat(1);
     const randomizedArray = randomize(flatArray);
     const totalEntries = randomizedArray.reduce(function(obj, item) {
