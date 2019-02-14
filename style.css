@@ -16,6 +16,10 @@ button {
   font-size: 14px;
 }
 
+.percentage {
+  font-size: 16px;
+}
+
 @media screen and (max-width: 600px) {
   .alert {
     font-size: 10px;

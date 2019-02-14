@@ -65,7 +65,7 @@ const handleOdds = () => {
   entryValues.forEach(entry => {
     let raffleOdds = ((entry / flatArray.length) * 100).toFixed(2) + "%";
     let spanDiv = $("<span>");
-    spanDiv.addClass("percentage").text(`${raffleOdds}, `);
+    spanDiv.addClass("percentage ml-1 badge badge-dark").text(`${raffleOdds}`);
     $("#chance").append(spanDiv);
   });
   return { totalEntries, flatArray };
@@ -76,8 +76,11 @@ const writeToPage = (totalEntries, flatArray) => {
   const slicedFinal = final.slice(1, -1);
   const replacedFinal = slicedFinal.replace(/\"/g, " ");
   const trueFinal = replacedFinal.replace(/ :/g, ": ");
-  $("#odds").text(`Entries: ${trueFinal}`);
-  $("#donation-total").text(`Total Entries: ${flatArray.length}`);
+  $("#odds").html(`<div class="badge badge-dark">Entries: ${trueFinal}</div>`);
+
+  $("#donation-total").html(
+    `<div class="badge badge-primary">Total Entries: ${flatArray.length}</div>`
+  );
   $("#pick-winner").prop("disabled", false);
   $(".alert").alert("close");
 };
@@ -117,22 +120,24 @@ const pickWinner = () => {
   const winner = random[Math.floor(Math.random() * random.length)];
   randomizeProgress();
   window.setTimeout(() => {
-    $("#winner").text(`5`);
+    $("#winner").html(`<div class="badge badge-danger">5</div>`);
   }, 1000);
   window.setTimeout(() => {
-    $("#winner").text(`4`);
+    $("#winner").html(`<div class="badge badge-danger">4</div>`);
   }, 2000);
   window.setTimeout(() => {
-    $("#winner").text(`3`);
+    $("#winner").html(`<div class="badge badge-danger">3</div>`);
   }, 3000);
   window.setTimeout(() => {
-    $("#winner").text(`2`);
+    $("#winner").html(`<div class="badge badge-danger">2</div>`);
   }, 4000);
   window.setTimeout(() => {
-    $("#winner").text(`The winner is... `);
+    $("#winner").html(`<div class="badge badge-danger">The winner is...</div>`);
   }, 5000);
   window.setTimeout(() => {
-    $("#winner").text(`The winner is... ${winner}`);
+    $("#winner").html(
+      `<div class="badge badge-success slideInRight">${winner}!</div>`
+    );
   }, 6000);
 };
 
