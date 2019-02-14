@@ -65,7 +65,7 @@ const handleOdds = () => {
   entryValues.forEach(entry => {
     let raffleOdds = ((entry / flatArray.length) * 100).toFixed(2) + "%";
     let spanDiv = $("<span>");
-    spanDiv.addClass("percentage ml-1 badge badge-dark").text(`${raffleOdds}`);
+    spanDiv.addClass("percentage m-1 badge badge-dark").text(`${raffleOdds}`);
     $("#chance").append(spanDiv);
   });
   return { totalEntries, flatArray };
@@ -76,7 +76,9 @@ const writeToPage = (totalEntries, flatArray) => {
   const slicedFinal = final.slice(1, -1);
   const replacedFinal = slicedFinal.replace(/\"/g, " ");
   const trueFinal = replacedFinal.replace(/ :/g, ": ");
-  $("#odds").html(`<div class="badge badge-dark">Entries: ${trueFinal}</div>`);
+  $("#odds").html(
+    `<div id="entries" class="badge badge-dark">Entries: ${trueFinal}</div>`
+  );
 
   $("#donation-total").html(
     `<div class="badge badge-primary">Total Entries: ${flatArray.length}</div>`
@@ -121,22 +123,22 @@ const pickWinner = () => {
   randomizeProgress();
   const badgeDanger = `<div class="badge badge-danger">`;
   const badgeSuccess = `<div class="badge badge-success">`;
-  window.setTimeout(() => {
+  setTimeout(() => {
     $("#winner").html(`${badgeDanger}5</div>`);
   }, 1000);
-  window.setTimeout(() => {
+  setTimeout(() => {
     $("#winner").html(`${badgeDanger}4</div>`);
   }, 2000);
-  window.setTimeout(() => {
+  setTimeout(() => {
     $("#winner").html(`${badgeDanger}3</div>`);
   }, 3000);
-  window.setTimeout(() => {
+  setTimeout(() => {
     $("#winner").html(`${badgeDanger}2</div>`);
   }, 4000);
-  window.setTimeout(() => {
+  setTimeout(() => {
     $("#winner").html(`${badgeSuccess}The winner is...</div>`);
   }, 5000);
-  window.setTimeout(() => {
+  setTimeout(() => {
     $("#winner").html(`${badgeSuccess}${winner}!</div>`);
   }, 6000);
 };
