@@ -26,7 +26,7 @@ const randomize = array => {
 const randomizeProgress = () => {
   let currentProgress = 0;
   const interval = setInterval(function() {
-    currentProgress += getRandomInt(20, 50);
+    currentProgress += getRandomInt(25, 50);
     $("#dynamic")
       .css("width", currentProgress + "%")
       .attr("aria-valuenow", currentProgress)
@@ -115,7 +115,25 @@ const pickWinner = () => {
   const flatArray = raffleArray.flat(1);
   const random = randomize(flatArray);
   const winner = random[Math.floor(Math.random() * random.length)];
-  $("#winner").text(`The winner is... ${winner}`);
+  randomizeProgress();
+  window.setTimeout(() => {
+    $("#winner").text(`5`);
+  }, 1000);
+  window.setTimeout(() => {
+    $("#winner").text(`4`);
+  }, 2000);
+  window.setTimeout(() => {
+    $("#winner").text(`3`);
+  }, 3000);
+  window.setTimeout(() => {
+    $("#winner").text(`2`);
+  }, 4000);
+  window.setTimeout(() => {
+    $("#winner").text(`The winner is... `);
+  }, 5000);
+  window.setTimeout(() => {
+    $("#winner").text(`The winner is... ${winner}`);
+  }, 6000);
 };
 
 $("#submit").on("click", event => {
