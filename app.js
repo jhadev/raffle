@@ -119,25 +119,25 @@ const pickWinner = () => {
   const random = randomize(flatArray);
   const winner = random[Math.floor(Math.random() * random.length)];
   randomizeProgress();
+  const badgeDanger = `<div class="badge badge-danger">`;
+  const badgeSuccess = `<div class="badge badge-success">`;
   window.setTimeout(() => {
-    $("#winner").html(`<div class="badge badge-danger">5</div>`);
+    $("#winner").html(`${badgeDanger}5</div>`);
   }, 1000);
   window.setTimeout(() => {
-    $("#winner").html(`<div class="badge badge-danger">4</div>`);
+    $("#winner").html(`${badgeDanger}4</div>`);
   }, 2000);
   window.setTimeout(() => {
-    $("#winner").html(`<div class="badge badge-danger">3</div>`);
+    $("#winner").html(`${badgeDanger}3</div>`);
   }, 3000);
   window.setTimeout(() => {
-    $("#winner").html(`<div class="badge badge-danger">2</div>`);
+    $("#winner").html(`${badgeDanger}2</div>`);
   }, 4000);
   window.setTimeout(() => {
-    $("#winner").html(`<div class="badge badge-danger">The winner is...</div>`);
+    $("#winner").html(`${badgeSuccess}The winner is...</div>`);
   }, 5000);
   window.setTimeout(() => {
-    $("#winner").html(
-      `<div class="badge badge-success slideInRight">${winner}!</div>`
-    );
+    $("#winner").html(`${badgeSuccess}${winner}!</div>`);
   }, 6000);
 };
 
