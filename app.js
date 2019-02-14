@@ -65,7 +65,7 @@ const handleOdds = () => {
   entryValues.forEach(entry => {
     let raffleOdds = ((entry / flatArray.length) * 100).toFixed(2) + "%";
     let spanDiv = $("<span>");
-    spanDiv.addClass("percentage m-1 badge badge-dark").text(`${raffleOdds}`);
+    spanDiv.addClass("percentage m-1 badge badge-light").text(`${raffleOdds}`);
     $("#chance").append(spanDiv);
   });
   return { totalEntries, flatArray };
@@ -76,7 +76,7 @@ const writeToPage = (totalEntries, flatArray) => {
   const slicedFinal = final.slice(1, -1);
   const replacedFinal = slicedFinal.replace(/\"/g, " ");
   const trueFinal = replacedFinal.replace(/ :/g, ": ");
-  $("#odds").html(`<div class="badge badge-dark">Entries: ${trueFinal}</div>`);
+  $("#odds").html(`<div class="badge badge-light">Entries: ${trueFinal}</div>`);
 
   $("#donation-total").html(
     `<div class="badge badge-primary">Total Entries: ${flatArray.length}</div>`
