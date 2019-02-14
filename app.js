@@ -76,9 +76,7 @@ const writeToPage = (totalEntries, flatArray) => {
   const slicedFinal = final.slice(1, -1);
   const replacedFinal = slicedFinal.replace(/\"/g, " ");
   const trueFinal = replacedFinal.replace(/ :/g, ": ");
-  $("#odds").html(
-    `<div id="entries" class="badge badge-dark">Entries: ${trueFinal}</div>`
-  );
+  $("#odds").html(`<div class="badge badge-dark">Entries: ${trueFinal}</div>`);
 
   $("#donation-total").html(
     `<div class="badge badge-primary">Total Entries: ${flatArray.length}</div>`
