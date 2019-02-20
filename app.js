@@ -136,9 +136,10 @@ const className = color => {
 const pickWinner = () => {
   const flatArray = raffleArray.flat(1);
   const random = randomize(flatArray);
-  const winner = random[[getRandomInt(0, random.length)]];
+  const winner = random[[getRandomInt(0, random.length - 1)]];
   let interval = window.setInterval(() => {
-    const tickerRandom = random[[getRandomInt(0, random.length)]];
+    const tickerRandom = random[[getRandomInt(0, random.length - 1)]];
+    console.log(tickerRandom);
     $("#winner").html(`<div class="${className("red")}">${tickerRandom}</div>`);
     window.setTimeout(() => {
       clearInterval(interval);
