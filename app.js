@@ -139,7 +139,6 @@ const pickWinner = () => {
   const winner = random[getRandomInt(0, random.length - 1)];
   let interval = window.setInterval(() => {
     const tickerRandom = random[getRandomInt(0, random.length - 1)];
-    console.log(tickerRandom);
     $("#winner").html(`<div class="${className("red")}">${tickerRandom}</div>`);
     window.setTimeout(() => {
       clearInterval(interval);
