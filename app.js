@@ -129,7 +129,7 @@ const pickWinner = () => {
   }, 80);
   randomizeProgress();
   setTimeout(() => {
-    $("#winner").html(`${badgeSuccess}The winner is...${winner}!</div>`);
+    $("#winner").html(`${badgeSuccess}The winner is... ${winner}!</div>`);
   }, 6000);
 };
 

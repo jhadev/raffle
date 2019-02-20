@@ -47,6 +47,10 @@ body {
     cursor: pointer;
   }
 
+  #winner {
+    font-size: 30px;
+  }
+
   #odds {
     font-size: 16px;
   }
