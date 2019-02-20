@@ -118,26 +118,18 @@ const pickWinner = () => {
   const flatArray = raffleArray.flat(1);
   const random = randomize(flatArray);
   const winner = random[Math.floor(Math.random() * random.length)];
-  randomizeProgress();
   const badgeDanger = `<div class="badge badge-danger">`;
   const badgeSuccess = `<div class="badge badge-success">`;
+  let interval = window.setInterval(() => {
+    const tickerRandom = random[Math.floor(Math.random() * random.length)];
+    $("#winner").html(`${badgeDanger}${tickerRandom}</div>`);
+    window.setTimeout(() => {
+      clearInterval(interval);
+    }, 5000);
+  }, 80);
+  randomizeProgress();
   setTimeout(() => {
-    $("#winner").html(`${badgeDanger}5</div>`);
-  }, 1000);
-  setTimeout(() => {
-    $("#winner").html(`${badgeDanger}4</div>`);
-  }, 2000);
-  setTimeout(() => {
-    $("#winner").html(`${badgeDanger}3</div>`);
-  }, 3000);
-  setTimeout(() => {
-    $("#winner").html(`${badgeDanger}2</div>`);
-  }, 4000);
-  setTimeout(() => {
-    $("#winner").html(`${badgeSuccess}The winner is...</div>`);
-  }, 5000);
-  setTimeout(() => {
-    $("#winner").html(`${badgeSuccess}${winner}!</div>`);
+    $("#winner").html(`${badgeSuccess}The winner is...${winner}!</div>`);
   }, 6000);
 };
 
