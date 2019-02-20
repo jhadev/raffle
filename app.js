@@ -126,11 +126,11 @@ const pickWinner = () => {
     window.setTimeout(() => {
       clearInterval(interval);
     }, 5000);
-  }, 80);
+  }, 100);
   randomizeProgress();
   setTimeout(() => {
     $("#winner").html(`${badgeSuccess}The winner is... ${winner}!</div>`);
-  }, 6000);
+  }, 5100);
 };
 
 $("#submit").on("click", event => {
