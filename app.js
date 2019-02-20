@@ -114,6 +114,13 @@ const handleErrors = () => {
   $(".form-group").append(alertDiv);
 };
 
+const className = int => {
+  let classes = "badge badge-";
+  classes +=
+    int == 0 ? "success" : int == 1 ? "danger" : int == 2 ? "light" : "warning";
+  return classes;
+};
+
 const pickWinner = () => {
   const flatArray = raffleArray.flat(1);
   const random = randomize(flatArray);
