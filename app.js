@@ -76,10 +76,12 @@ const writeToPage = (totalEntries, flatArray) => {
   const slicedFinal = final.slice(1, -1);
   const replacedFinal = slicedFinal.replace(/\"/g, " ");
   const trueFinal = replacedFinal.replace(/ :/g, ": ");
-  $("#odds").html(`<div class="badge badge-light">Entries: ${trueFinal}</div>`);
+  $("#odds").html(
+    `<div class="${className("white")}">Entries: ${trueFinal}</div>`
+  );
 
   $("#donation-total").html(
-    `<div class="badge badge-primary">Total Entries: ${flatArray.length}</div>`
+    `<div class="${className("blue")}">Total Entries: ${flatArray.length}</div>`
   );
   $("#pick-winner").prop("disabled", false);
   $(".alert").alert("close");
@@ -114,10 +116,20 @@ const handleErrors = () => {
   $(".form-group").append(alertDiv);
 };
 
-const className = int => {
+const className = color => {
   let classes = "badge badge-";
   classes +=
-    int == 0 ? "success" : int == 1 ? "danger" : int == 2 ? "light" : "warning";
+    color == "green"
+      ? "success"
+      : color == "red"
+      ? "danger"
+      : color == "white"
+      ? "light"
+      : color == "yellow"
+      ? "warning"
+      : color == "blue"
+      ? "primary"
+      : "dark";
   return classes;
 };
 
@@ -125,18 +137,18 @@ const pickWinner = () => {
   const flatArray = raffleArray.flat(1);
   const random = randomize(flatArray);
   const winner = random[Math.floor(Math.random() * random.length)];
-  const badgeDanger = `<div class="badge badge-danger">`;
-  const badgeSuccess = `<div class="badge badge-success">`;
   let interval = window.setInterval(() => {
     const tickerRandom = random[Math.floor(Math.random() * random.length)];
-    $("#winner").html(`${badgeDanger}${tickerRandom}</div>`);
+    $("#winner").html(`<div class="${className("red")}">${tickerRandom}</div>`);
     window.setTimeout(() => {
       clearInterval(interval);
     }, 5000);
   }, 100);
   randomizeProgress();
   setTimeout(() => {
-    $("#winner").html(`${badgeSuccess}The winner is... ${winner}!</div>`);
+    $("#winner").html(
+      `<div class="${className("green")}">The winner is ${winner}!</div>`
+    );
   }, 5100);
 };
 
