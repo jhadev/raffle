@@ -36,6 +36,11 @@ body {
   flex: 1;
 }
 
+hr {
+  background-color: white;
+  border-color: white;
+}
+
 .alert {
   cursor: pointer;
   font-size: 14px;
