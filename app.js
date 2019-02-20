@@ -159,7 +159,11 @@ $("#submit").on("click", event => {
 
 $("#pick-winner").on("click", event => {
   event.preventDefault();
-  pickWinner();
+  if (raffleArray.length == 0) {
+    $(".modal").modal();
+  } else {
+    pickWinner();
+  }
 });
 
 $("#clear").on("click", event => {
