@@ -167,6 +167,7 @@ $("#pick-winner").on("click", event => {
 });
 
 $("#clear").on("click", event => {
+  event.preventDefault();
   raffleArray = [];
   flatArray = [];
   $("#donation-total, #odds, #chance, #winner").empty();
@@ -174,4 +175,5 @@ $("#clear").on("click", event => {
     .css("width", "0%")
     .attr("aria-valuenow", 0)
     .text("");
+  $("#pick-winner").prop("disabled", true);
 });
