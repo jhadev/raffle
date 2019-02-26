@@ -2,6 +2,7 @@ $(document).ready(function() {
   validate();
 });
 
+//validate upon page load to handle errors
 function validate() {
   $("#entries, #donator").keyup(function() {
     if ($(this).val() == "") {
@@ -12,9 +13,10 @@ function validate() {
   });
 }
 
+//declare empty raffle array
 let raffleArray = [];
-let flatArray = [];
 
+//function to randomize array
 const randomize = array => {
   for (let i = array.length - 1; i > 0; i--) {
     let j = Math.floor(Math.random() * (i + 1));
@@ -23,7 +25,8 @@ const randomize = array => {
   return array;
 };
 
-const randomizeProgress = () => {
+//function for progress bar animation
+const animateProgressBar = () => {
   let currentProgress = 0;
   const interval = setInterval(function() {
     currentProgress += getRandomInt(25, 50);
@@ -41,10 +44,12 @@ const randomizeProgress = () => {
   }, 1000);
 };
 
+//function to get random number
 const getRandomInt = (min, max) => {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 };
 
+//function to push entries into the raffleArray
 const handleEntry = (name, entries) => {
   const newName = `${name},`;
   const repeatedName = newName.repeat(entries);
@@ -54,6 +59,7 @@ const handleEntry = (name, entries) => {
   $("#donator, #entries").val("");
 };
 
+//function for calculating the odds of winning for each entrant.
 const handleOdds = () => {
   const flatArray = raffleArray.reduce((a, b) => a.concat(b), []);
   const randomizedArray = randomize(flatArray);
@@ -61,61 +67,17 @@ const handleOdds = () => {
     obj[item] = (obj[item] || 0) + 1;
     return obj;
   }, {});
-  let entryValues = Object.values(totalEntries);
-  entryValues.forEach(entry => {
-    let raffleOdds = ((entry / flatArray.length) * 100).toFixed(2) + "%";
-    let spanDiv = $("<span>");
+  const entryValues = Object.values(totalEntries);
+  entryValues.forEach(value => {
+    const raffleOdds = ((value / flatArray.length) * 100).toFixed(2) + "%";
+    const spanDiv = $("<span>");
     spanDiv.addClass("percentage m-1 badge badge-light").text(`${raffleOdds}`);
     $("#chance").append(spanDiv);
   });
   return { totalEntries, flatArray };
 };
 
-const writeToPage = (totalEntries, flatArray) => {
-  let final = JSON.stringify(totalEntries);
-  const slicedFinal = final.slice(1, -1);
-  const replacedFinal = slicedFinal.replace(/\"/g, " ");
-  const trueFinal = replacedFinal.replace(/ :/g, ": ");
-  $("#odds").html(
-    `<div class="${className("white")}">Entries: ${trueFinal}</div>`
-  );
-
-  $("#donation-total").html(
-    `<div class="${className("blue")}">Total Entries: ${flatArray.length}</div>`
-  );
-  $("#pick-winner").prop("disabled", false);
-  $(".alert").alert("close");
-};
-
-const doSubmit = () => {
-  $("#chance").empty();
-  const name = $("#donator")
-    .val()
-    .trim();
-  const entries = $("#entries")
-    .val()
-    .trim();
-  if (entries > 0 && entries != "" && name != "") {
-    randomizeProgress();
-    handleEntry(name, entries);
-    const { totalEntries, flatArray } = handleOdds();
-    writeToPage(totalEntries, flatArray);
-  } else {
-    handleErrors();
-  }
-};
-
-const handleErrors = () => {
-  $("#entries, #donator").val("");
-  let alertDiv = $("<div>");
-  alertDiv
-    .addClass("mt-2 alert alert-danger")
-    .attr("role", "alert")
-    .attr("data-dismiss", "alert")
-    .text(`Please input a valid value. Click to dismiss.`);
-  $(".form-group").append(alertDiv);
-};
-
+//function for quickly writing bootstrap badge color classes,
 const className = color => {
   let classes = "badge badge-";
   classes +=
@@ -133,18 +95,67 @@ const className = color => {
   return classes;
 };
 
+//function to write the total entries, entries for each entrant, and odds to the page.
+const writeToPage = (totalEntries, flatArray) => {
+  const final = JSON.stringify(totalEntries);
+  const slicedFinal = final.slice(1, -1);
+  const replacedFinal = slicedFinal.replace(/\"/g, " ");
+  const formattedFinal = replacedFinal.replace(/ :/g, ": ");
+  $("#odds").html(
+    `<div class="${className("white")}">Entries: ${formattedFinal}</div>`
+  );
+
+  $("#donation-total").html(
+    `<div class="${className("blue")}">Total Entries: ${flatArray.length}</div>`
+  );
+  $("#pick-winner").prop("disabled", false);
+  $(".alert").alert("close");
+};
+
+//writes if error is found on submission.
+const handleErrors = () => {
+  $("#entries, #donator").val("");
+  let alertDiv = $("<div>");
+  alertDiv
+    .addClass("mt-2 alert alert-danger")
+    .attr("role", "alert")
+    .attr("data-dismiss", "alert")
+    .text(`Please input a valid value. Click to dismiss.`);
+  $(".form-group").append(alertDiv);
+};
+
+//function that bundles the other functions and validates the user's submission before executing.
+const doSubmit = () => {
+  $("#chance").empty();
+  const name = $("#donator")
+    .val()
+    .trim();
+  const entries = $("#entries")
+    .val()
+    .trim();
+  if (entries > 0 && entries != "" && name != "") {
+    animateProgressBar();
+    handleEntry(name, entries);
+    const { totalEntries, flatArray } = handleOdds();
+    writeToPage(totalEntries, flatArray);
+  } else {
+    handleErrors();
+  }
+};
+
+//function to pick a winner and create a ticker "animation" on the page before displaying the winner.
 const pickWinner = () => {
   const flatArray = raffleArray.reduce((a, b) => a.concat(b), []);
   const random = randomize(flatArray);
   const winner = random[getRandomInt(0, random.length - 1)];
-  let interval = window.setInterval(() => {
+  const interval = window.setInterval(() => {
     const tickerRandom = random[getRandomInt(0, random.length - 1)];
     $("#winner").html(`<div class="${className("red")}">${tickerRandom}</div>`);
     window.setTimeout(() => {
       clearInterval(interval);
     }, 5000);
   }, 100);
-  randomizeProgress();
+  animateProgressBar();
   setTimeout(() => {
     $("#winner").html(
       `<div class="${className("green")}">The winner is ${winner}!</div>`
@@ -152,6 +163,19 @@ const pickWinner = () => {
   }, 5100);
 };
 
+//function to reset entries
+const resetEntries = () => {
+  raffleArray = [];
+  flatArray = [];
+  $("#donation-total, #odds, #chance, #winner").empty();
+  $(".progress-bar")
+    .css("width", "0%")
+    .attr("aria-valuenow", 0)
+    .text("");
+  $("#pick-winner").prop("disabled", true);
+};
+
+//click functions
 $("#submit").on("click", event => {
   event.preventDefault();
   doSubmit();
@@ -168,12 +192,5 @@ $("#pick-winner").on("click", event => {
 
 $("#clear").on("click", event => {
   event.preventDefault();
-  raffleArray = [];
-  flatArray = [];
-  $("#donation-total, #odds, #chance, #winner").empty();
-  $(".progress-bar")
-    .css("width", "0%")
-    .attr("aria-valuenow", 0)
-    .text("");
-  $("#pick-winner").prop("disabled", true);
+  resetEntries();
 });
