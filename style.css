@@ -36,6 +36,10 @@ hr {
   flex: 1;
 }
 
+.title {
+  font-family: 'Roboto Slab', serif;
+}
+
 #odds {
   display: block;
   word-wrap: break-word;
