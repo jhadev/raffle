@@ -63,18 +63,18 @@ const handleEntry = (name, entries) => {
 const handleOdds = () => {
   const flatArray = raffleArray.reduce((a, b) => a.concat(b), []);
   const randomizedArray = randomize(flatArray);
-  const totalEntries = randomizedArray.reduce(function(obj, item) {
+  const entrantTotal = randomizedArray.reduce((obj, item) => {
     obj[item] = (obj[item] || 0) + 1;
     return obj;
   }, {});
-  const entryValues = Object.values(totalEntries);
-  entryValues.forEach(value => {
+  const totalValues = Object.values(entrantTotal);
+  totalValues.forEach(value => {
     const raffleOdds = ((value / flatArray.length) * 100).toFixed(2) + "%";
-    const spanDiv = $("<span>");
-    spanDiv.addClass("percentage m-1 badge badge-light").text(`${raffleOdds}`);
-    $("#chance").append(spanDiv);
+    const span = $("<span>");
+    span.addClass("percentage m-1 badge badge-light").text(`${raffleOdds}`);
+    $("#chance").append(span);
   });
-  return { totalEntries, flatArray };
+  return { entrantTotal, flatArray };
 };
 
 //function for quickly writing bootstrap badge color classes,
@@ -96,13 +96,13 @@ const className = color => {
 };
 
 //function to write the total entries, entries for each entrant, and odds to the page.
-const writeToPage = (totalEntries, flatArray) => {
-  const final = JSON.stringify(totalEntries);
-  const slicedFinal = final.slice(1, -1);
-  const replacedFinal = slicedFinal.replace(/\"/g, " ");
-  const formattedFinal = replacedFinal.replace(/ :/g, ": ");
+const writeToPage = (entrantTotal, flatArray) => {
+  const entryCount = JSON.stringify(entrantTotal);
+  const slicedEntryCount = entryCount.slice(1, -1);
+  const replacedEntryCount = slicedEntryCount.replace(/\"/g, " ");
+  const formattedEntryCount = replacedEntryCount.replace(/ :/g, ": ");
   $("#odds").html(
-    `<div class="${className("white")}">Entries: ${formattedFinal}</div>`
+    `<div class="${className("white")}">Entries: ${formattedEntryCount}</div>`
   );
 
   $("#donation-total").html(
@@ -136,8 +136,8 @@ const doSubmit = () => {
   if (entries > 0 && entries != "" && name != "") {
     animateProgressBar();
     handleEntry(name, entries);
-    const { totalEntries, flatArray } = handleOdds();
-    writeToPage(totalEntries, flatArray);
+    const { entrantTotal, flatArray } = handleOdds();
+    writeToPage(entrantTotal, flatArray);
   } else {
     handleErrors();
   }
@@ -190,7 +190,7 @@ $("#pick-winner").on("click", event => {
   }
 });
 
-$("#clear").on("click", event => {
+$("#reset").on("click", event => {
   event.preventDefault();
   resetEntries();
 });
