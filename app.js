@@ -4,7 +4,7 @@ $(document).ready(function() {
 
 //validate upon page load to handle errors
 function validate() {
-  $("#entries, #donator").keyup(function() {
+  $("#entries, #entrant-name").keyup(function() {
     if ($(this).val() == "") {
       $(".enable").prop("disabled", true);
     } else {
@@ -56,7 +56,7 @@ const handleEntry = (name, entries) => {
   const slicedName = repeatedName.slice(0, -1);
   const fullEntry = slicedName.split(",");
   raffleArray.push(fullEntry);
-  $("#donator, #entries").val("");
+  $("#entrant-name, #entries").val("");
 };
 
 //function for calculating the odds of winning for each entrant.
@@ -105,7 +105,7 @@ const writeToPage = (entrantTotal, flatArray) => {
     `<div class="${className("white")}">Entries: ${formattedEntryCount}</div>`
   );
 
-  $("#donation-total").html(
+  $("#total-entries").html(
     `<div class="${className("blue")}">Total Entries: ${flatArray.length}</div>`
   );
   $("#pick-winner").prop("disabled", false);
@@ -114,8 +114,8 @@ const writeToPage = (entrantTotal, flatArray) => {
 
 //writes if error is found on submission.
 const handleErrors = () => {
-  $("#entries, #donator").val("");
-  let alertDiv = $("<div>");
+  $("#entries, #entrant-name").val("");
+  const alertDiv = $("<div>");
   alertDiv
     .addClass("mt-2 alert alert-danger")
     .attr("role", "alert")
@@ -127,7 +127,7 @@ const handleErrors = () => {
 //function that bundles the other functions and validates the user's submission before executing.
 const doSubmit = () => {
   $("#chance").empty();
-  const name = $("#donator")
+  const name = $("#entrant-name")
     .val()
     .trim();
   const entries = $("#entries")
@@ -167,7 +167,7 @@ const pickWinner = () => {
 const resetEntries = () => {
   raffleArray = [];
   flatArray = [];
-  $("#donation-total, #odds, #chance, #winner").empty();
+  $("#total-entries, #odds, #chance, #winner").empty();
   $(".progress-bar")
     .css("width", "0%")
     .attr("aria-valuenow", 0)
