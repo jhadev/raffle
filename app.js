@@ -1,10 +1,10 @@
-$(document).ready(function () {
+$(document).ready(function() {
   validate();
 });
 
 //validate upon page load to handle errors
 function validate() {
-  $("#entries, #entrant-name").keyup(function () {
+  $("#entries, #entrant-name").keyup(function() {
     if ($(this).val() == "") {
       $(".enable").prop("disabled", true);
     } else {
@@ -28,7 +28,7 @@ const randomize = array => {
 //function for progress bar animation
 const animateProgressBar = () => {
   let currentProgress = 0;
-  const interval = setInterval(function () {
+  const interval = setInterval(function() {
     currentProgress += getRandomInt(25, 50);
     $("#dynamic")
       .css("width", currentProgress + "%")
@@ -69,10 +69,32 @@ const handleOdds = () => {
   }, {});
   const totalValues = Object.values(entrantTotal);
   totalValues.forEach(value => {
-    const raffleOdds = ((value / flatArray.length) * 100).toFixed(2) + "%";
-    $("#chance").append(
-      `<div class="percentage m-1 ${className("white")}">${raffleOdds}</div><hr>`
-    ).addClass(`border-left border-right border-light`);
+    const raffleOdds = ((value / flatArray.length) * 100).toFixed(2);
+    if (raffleOdds > 70) {
+      $("#chance")
+        .append(
+          `<div class="percentage m-1 ${className(
+            "green"
+          )}">${raffleOdds}%</div><hr>`
+        )
+        .addClass(`border-left border-right border-light`);
+    } else if (raffleOdds < 20) {
+      $("#chance")
+        .append(
+          `<div class="percentage m-1 ${className(
+            "red"
+          )}">${raffleOdds}%</div><hr>`
+        )
+        .addClass(`border-left border-right border-light`);
+    } else {
+      $("#chance")
+        .append(
+          `<div class="percentage m-1 ${className(
+            "white"
+          )}">${raffleOdds}%</div><hr>`
+        )
+        .addClass(`border-left border-right border-light`);
+    }
   });
   return {
     entrantTotal,
@@ -89,9 +111,9 @@ const handleCount = (entrantTotal, flatArray) => {
   const formattedEntryCount = replacedEntryCount.replace(/ :/g, ": ");
   const splitEntryCount = formattedEntryCount.split(",");
   splitEntryCount.forEach(count => {
-    $("#odds").append(
-      `<div class="names m-1 ${className("white")}">${count}</div><hr>`
-    ).addClass(`border-left border-right border-light`);
+    $("#odds")
+      .append(`<div class="names m-1 ${className("white")}">${count}</div><hr>`)
+      .addClass(`border-left border-right border-light`);
   });
 
   $("#total-entries").html(
@@ -125,10 +147,7 @@ const doSubmit = () => {
     $("#chance").empty();
     animateProgressBar();
     handleEntry(name, entries);
-    const {
-      entrantTotal,
-      flatArray
-    } = handleOdds();
+    const { entrantTotal, flatArray } = handleOdds();
     handleCount(entrantTotal, flatArray);
   } else {
     handleErrors();
@@ -171,17 +190,17 @@ const resetEntries = () => {
 const className = color => {
   let classes = "badge badge-";
   classes +=
-    color == "green" ?
-    "success" :
-    color == "red" ?
-    "danger" :
-    color == "white" ?
-    "light" :
-    color == "yellow" ?
-    "warning" :
-    color == "blue" ?
-    "primary" :
-    "dark";
+    color == "green"
+      ? "success"
+      : color == "red"
+      ? "danger"
+      : color == "white"
+      ? "light"
+      : color == "yellow"
+      ? "warning"
+      : color == "blue"
+      ? "primary"
+      : "dark";
   return classes;
 };
 
