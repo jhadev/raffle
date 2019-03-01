@@ -61,6 +61,7 @@ const handleEntry = (name, entries) => {
 
 //function for calculating the odds of winning for each entrant and writing it to the page.
 const handleOdds = () => {
+  //$("#chance").html(`Odds<hr>`);
   const flatArray = raffleArray.reduce((a, b) => a.concat(b), []);
   const randomizedArray = randomize(flatArray);
   const entrantTotal = randomizedArray.reduce((obj, item) => {
@@ -104,14 +105,15 @@ const handleOdds = () => {
 
 //function to handle the total count for each entrant and write it to page along with the total entries
 const handleCount = (entrantTotal, flatArray) => {
-  $("#odds").empty();
+  $("#count").empty();
+  //.html(`Entries<hr>`);
   const entryCount = JSON.stringify(entrantTotal);
   const slicedEntryCount = entryCount.slice(1, -1);
   const replacedEntryCount = slicedEntryCount.replace(/\"/g, " ");
   const formattedEntryCount = replacedEntryCount.replace(/ :/g, ": ");
   const splitEntryCount = formattedEntryCount.split(",");
   splitEntryCount.forEach(count => {
-    $("#odds")
+    $("#count")
       .append(`<div class="names m-1 ${className("white")}">${count}</div><hr>`)
       .addClass(`border-left border-right border-light`);
   });
@@ -178,7 +180,7 @@ const pickWinner = () => {
 const resetEntries = () => {
   raffleArray = [];
   flatArray = [];
-  $("#total-entries, #odds, #chance, #winner").empty();
+  $("#total-entries, #count, #chance, #winner").empty();
   $(".progress-bar")
     .css("width", "0%")
     .attr("aria-valuenow", 0)

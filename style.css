@@ -19,8 +19,8 @@ hr {
   font-size: 14px;
 }
 
-#odds,
-#chance {
+#chance,
+#count {
   word-wrap: break-word;
 }
 
@@ -48,8 +48,8 @@ hr {
     cursor: pointer;
   }
 
-  #odds,
-  #chance {
+  #chance,
+  #count {
     font-size: 20px;
   }
 
