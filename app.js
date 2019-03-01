@@ -71,31 +71,13 @@ const handleOdds = () => {
   totalValues.forEach(value => {
     const raffleOdds = ((value / flatArray.length) * 100).toFixed(2) + "%";
     $("#chance").append(
-      `<div class="percentage m-1 badge badge-light">${raffleOdds}</div><hr>`
+      `<div class="percentage m-1 ${className("white")}">${raffleOdds}</div><hr>`
     );
   });
   return {
     entrantTotal,
     flatArray
   };
-};
-
-//function for quickly writing bootstrap badge color classes
-const className = color => {
-  let classes = "badge badge-";
-  classes +=
-    color == "green" ?
-    "success" :
-    color == "red" ?
-    "danger" :
-    color == "white" ?
-    "light" :
-    color == "yellow" ?
-    "warning" :
-    color == "blue" ?
-    "primary" :
-    "dark";
-  return classes;
 };
 
 //function to handle the total count for each entrant and write it to page along with the total entries
@@ -183,6 +165,24 @@ const resetEntries = () => {
     .attr("aria-valuenow", 0)
     .text("");
   $("#pick-winner").prop("disabled", true);
+};
+
+//function for quickly writing bootstrap badge color classes
+const className = color => {
+  let classes = "badge badge-";
+  classes +=
+    color == "green" ?
+    "success" :
+    color == "red" ?
+    "danger" :
+    color == "white" ?
+    "light" :
+    color == "yellow" ?
+    "warning" :
+    color == "blue" ?
+    "primary" :
+    "dark";
+  return classes;
 };
 
 //click functions
