@@ -42,6 +42,11 @@ hr {
     cursor: pointer;
   }
 
+  #odds,
+  #chance {
+    font-size: 20px;
+  }
+
   #winner {
     font-size: 30px;
   }
