@@ -1,10 +1,10 @@
-$(document).ready(function() {
+$(document).ready(function () {
   validate();
 });
 
 //validate upon page load to handle errors
 function validate() {
-  $("#entries, #entrant-name").keyup(function() {
+  $("#entries, #entrant-name").keyup(function () {
     if ($(this).val() == "") {
       $(".enable").prop("disabled", true);
     } else {
@@ -28,7 +28,7 @@ const randomize = array => {
 //function for progress bar animation
 const animateProgressBar = () => {
   let currentProgress = 0;
-  const interval = setInterval(function() {
+  const interval = setInterval(function () {
     currentProgress += getRandomInt(25, 50);
     $("#dynamic")
       .css("width", currentProgress + "%")
@@ -84,17 +84,17 @@ const handleOdds = () => {
 const className = color => {
   let classes = "badge badge-";
   classes +=
-    color == "green"
-      ? "success"
-      : color == "red"
-      ? "danger"
-      : color == "white"
-      ? "light"
-      : color == "yellow"
-      ? "warning"
-      : color == "blue"
-      ? "primary"
-      : "dark";
+    color == "green" ?
+    "success" :
+    color == "red" ?
+    "danger" :
+    color == "white" ?
+    "light" :
+    color == "yellow" ?
+    "warning" :
+    color == "blue" ?
+    "primary" :
+    "dark";
   return classes;
 };
 
@@ -133,7 +133,6 @@ const handleErrors = () => {
 
 //function that bundles the other functions and validates the user's submission before executing.
 const doSubmit = () => {
-  $("#chance").empty();
   const name = $("#entrant-name")
     .val()
     .trim();
@@ -141,9 +140,13 @@ const doSubmit = () => {
     .val()
     .trim();
   if (entries > 0 && entries != "" && name != "") {
+    $("#chance").empty();
     animateProgressBar();
     handleEntry(name, entries);
-    const { entrantTotal, flatArray } = handleOdds();
+    const {
+      entrantTotal,
+      flatArray
+    } = handleOdds();
     writeToPage(entrantTotal, flatArray);
   } else {
     handleErrors();
