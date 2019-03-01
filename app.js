@@ -49,7 +49,7 @@ const getRandomInt = (min, max) => {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 };
 
-//function to push entries into the raffleArray
+//function to count, format and push entries into the raffleArray
 const handleEntry = (name, entries) => {
   const newName = `${name},`;
   const repeatedName = newName.repeat(entries);
@@ -59,7 +59,7 @@ const handleEntry = (name, entries) => {
   $("#entrant-name, #entries").val("");
 };
 
-//function for calculating the odds of winning for each entrant.
+//function for calculating the odds of winning for each entrant and writing it to the page.
 const handleOdds = () => {
   const flatArray = raffleArray.reduce((a, b) => a.concat(b), []);
   const randomizedArray = randomize(flatArray);
@@ -80,7 +80,7 @@ const handleOdds = () => {
   };
 };
 
-//function for quickly writing bootstrap badge color classes,
+//function for quickly writing bootstrap badge color classes
 const className = color => {
   let classes = "badge badge-";
   classes +=
@@ -98,8 +98,8 @@ const className = color => {
   return classes;
 };
 
-//function to write the total entries, entries for each entrant, and odds to the page.
-const writeToPage = (entrantTotal, flatArray) => {
+//function to handle the total count for each entrant and write it to page along with the total entries
+const handleCount = (entrantTotal, flatArray) => {
   $("#odds").empty();
   const entryCount = JSON.stringify(entrantTotal);
   const slicedEntryCount = entryCount.slice(1, -1);
@@ -147,7 +147,7 @@ const doSubmit = () => {
       entrantTotal,
       flatArray
     } = handleOdds();
-    writeToPage(entrantTotal, flatArray);
+    handleCount(entrantTotal, flatArray);
   } else {
     handleErrors();
   }
@@ -193,7 +193,8 @@ $("#submit").on("click", event => {
 
 $("#pick-winner").on("click", event => {
   event.preventDefault();
-  if (raffleArray.length == 0) {
+  //unused error handling. disabling the button instead.
+  if (raffleArray.length === 0) {
     $(".modal").modal();
   } else {
     pickWinner();
