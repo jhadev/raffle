@@ -26,6 +26,7 @@ hr {
 
 .jumbotron-fluid {
   padding: 20px;
+  margin-bottom: -5px;
 }
 
 .spacer {
@@ -33,7 +34,7 @@ hr {
 }
 
 .title {
-  font-family: 'Roboto Slab', serif;
+  font-family: "Roboto Slab", serif;
 }
 
 @media screen and (max-width: 600px) {
