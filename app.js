@@ -72,7 +72,7 @@ const handleOdds = () => {
     const raffleOdds = ((value / flatArray.length) * 100).toFixed(2) + "%";
     $("#chance").append(
       `<div class="percentage m-1 ${className("white")}">${raffleOdds}</div><hr>`
-    );
+    ).addClass(`border-left border-right border-light`);
   });
   return {
     entrantTotal,
@@ -91,7 +91,7 @@ const handleCount = (entrantTotal, flatArray) => {
   splitEntryCount.forEach(count => {
     $("#odds").append(
       `<div class="names m-1 ${className("white")}">${count}</div><hr>`
-    );
+    ).addClass(`border-left border-right border-light`);
   });
 
   $("#total-entries").html(
