@@ -53,8 +53,7 @@ const getRandomInt = (min, max) => {
 const handleEntry = (name, entries) => {
   const newName = `${name},`;
   const repeatedName = newName.repeat(entries);
-  const slicedName = repeatedName.slice(0, -1);
-  const fullEntry = slicedName.split(",");
+  const fullEntry = repeatedName.slice(0, -1).split(",");
   raffleArray.push(fullEntry);
   $("#entrant-name, #entries").val("");
 };
@@ -108,11 +107,12 @@ const handleCount = (entrantTotal, flatArray) => {
   $("#count").empty();
   //.html(`Entries<hr>`);
   const entryCount = JSON.stringify(entrantTotal);
-  const slicedEntryCount = entryCount.slice(1, -1);
-  const replacedEntryCount = slicedEntryCount.replace(/\"/g, " ");
-  const formattedEntryCount = replacedEntryCount.replace(/ :/g, ": ");
-  const splitEntryCount = formattedEntryCount.split(",");
-  splitEntryCount.forEach(count => {
+  const formattedEntryCount = entryCount
+    .slice(1, -1)
+    .replace(/\"/g, " ")
+    .replace(/ :/g, ": ")
+    .split(",");
+  formattedEntryCount.forEach(count => {
     $("#count")
       .append(`<div class="names m-1 ${className("white")}">${count}</div><hr>`)
       .addClass(`border-left border-right border-light`);
