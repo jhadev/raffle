@@ -1,105 +1,149 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="https://use.fontawesome.com/releases/v5.7.0/css/all.css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css?family=Roboto+Slab"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
+    <title>Raffle</title>
+  </head>
 
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
-    crossorigin="anonymous" />
-  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" />
-  <link href="https://fonts.googleapis.com/css?family=Roboto+Slab" rel="stylesheet" />
-  <link rel="stylesheet" href="style.css" />
-  <title>Raffle</title>
-</head>
-
-<body class="bg-dark">
-  <div class="jumbotron-fluid jumbo bg-dark">
-    <h1 class="text-center title text-light">Simple Raffle</h1>
-    <h6 class="text-center title text-light">randomizes multiple times</h6>
-  </div>
-  <div class="container">
-    <div class="row">
-      <div class="col-12">
-        <div class="pad">
-          <h2 id="total-entries" class="text-center mb-4"></h2>
-          <div class="row justify-content-center">
-            <div class="col-md-6 col-8">
-              <h3 id="count" class="text-center text-light"></h3>
+  <body class="bg-dark">
+    <div class="jumbotron-fluid jumbo bg-dark">
+      <h1 class="text-center title text-light">Simple Raffle</h1>
+      <h6 class="text-center title text-light">randomizes multiple times</h6>
+    </div>
+    <div class="container">
+      <div class="row">
+        <div class="col-12">
+          <div class="pad">
+            <h2 id="total-entries" class="text-center mb-4"></h2>
+            <div class="row justify-content-center">
+              <div class="col-md-6 col-8">
+                <h3 id="count" class="text-center text-light"></h3>
+              </div>
+              <div class="col-md-2 col-4">
+                <h3 id="chance" class="text-center text-light"></h3>
+              </div>
             </div>
-            <div class="col-md-2 col-4">
-              <h3 id="chance" class="text-center text-light"></h3>
-            </div>
+            <h1 id="winner" class="text-center"></h1>
           </div>
-          <h1 id="winner" class="text-center"></h1>
         </div>
       </div>
-    </div>
-    <div class="card bg-light mt-2">
-      <div class="card-body">
-        <form>
-          <div class="form-group">
-            <label for="nameInput">Name</label>
-            <input type="name" class="form-control input-text" id="entrant-name" aria-describedby="nameInput"
-              placeholder="Enter name" />
-          </div>
-          <div class="form-group">
-            <label for="entriesInput">Number of entries</label>
-            <input type="number" class="form-control input-text" id="entries" placeholder="Numbers only please" />
-          </div>
-          <div class="row justify-content-center">
-            <div class="col-md-10 col-12">
-              <div class="progress bg-light mb-3">
-                <div id="dynamic" class="progress-bar progress-bar-animated progress-bar-striped bg-dark" role="progressbar"
-                  aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%">
-                  <span id="current-progress"></span>
+      <div class="row justify-content-center">
+        <div class="col-md-8 col-12">
+          <div class="card bg-light mt-2">
+            <div class="card-body">
+              <form>
+                <div class="form-group">
+                  <label for="nameInput">Name</label>
+                  <input
+                    type="name"
+                    class="form-control input-text"
+                    id="entrant-name"
+                    aria-describedby="nameInput"
+                    placeholder="Enter name"
+                  />
                 </div>
+                <div class="form-group">
+                  <label for="entriesInput">Number of entries</label>
+                  <input
+                    type="number"
+                    class="form-control input-text"
+                    id="entries"
+                    placeholder="Numbers only please"
+                  />
+                </div>
+                <div class="row justify-content-center">
+                  <div class="col-md-12 col-12">
+                    <div class="progress bg-light mb-3">
+                      <div
+                        id="dynamic"
+                        class="progress-bar progress-bar-animated progress-bar-striped bg-dark"
+                        role="progressbar"
+                        aria-valuenow="0"
+                        aria-valuemin="0"
+                        aria-valuemax="100"
+                        style="width: 0%"
+                      >
+                        <span id="current-progress"></span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <button
+                  id="submit"
+                  class="enable btn btn-primary"
+                  disabled="disabled"
+                >
+                  <i class="fas fa-dice"></i> Submit
+                </button>
+              </form>
+              <div class="row">
+                <button
+                  id="pick-winner"
+                  class="ml-3 btn btn-success mt-2"
+                  disabled="disabled"
+                >
+                  <i class="fas fa-dice"></i>
+                  Pick Winner
+                </button>
+              </div>
+              <div class="row">
+                <button id="reset" class="ml-3 btn btn-outline-danger mt-2">
+                  Reset
+                </button>
               </div>
             </div>
           </div>
-          <button id="submit" class="enable btn btn-primary" disabled="disabled">
-            <i class="fas fa-dice"></i> Submit
-          </button>
-        </form>
-        <div class="row">
-          <button id="pick-winner" class="ml-3 btn btn-success mt-2" disabled="disabled">
-            <i class="fas fa-dice"></i>
-            Pick Winner
-          </button>
-        </div>
-        <div class="row">
-          <button id="reset" class="ml-3 btn btn-outline-danger mt-2">
-            Reset
-          </button>
         </div>
       </div>
     </div>
-  </div>
-  <div class="spacer"></div>
-  <div class="modal" tabindex="-1" role="dialog">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title text-center">Error</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          <p>Please submit entries.</p>
+    <div class="spacer"></div>
+    <div class="modal" tabindex="-1" role="dialog">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title text-center">Error</h5>
+            <button
+              type="button"
+              class="close"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <p>Please submit entries.</p>
+          </div>
         </div>
       </div>
     </div>
-  </div>
-  <footer class="bg-dark text-center mt-2 sticky-footer">
-    <a href="https://github.com/jhadev/raffle" target="_blank"><i class="text-light fab fa-github icon-large"></i></a>
-  </footer>
+    <footer class="bg-dark text-center mt-2 sticky-footer">
+      <a href="https://github.com/jhadev/raffle" target="_blank"
+        ><i class="text-light fab fa-github icon-large"></i
+      ></a>
+    </footer>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.slim.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.2.1/js/bootstrap.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.11/lodash.min.js"></script>
-  <script src="app.js"></script>
-</body>
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.2.1/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.11/lodash.min.js"></script>
+    <script src="app.js"></script>
+  </body>
 </html>
