@@ -6,5 +6,6 @@ As simple as adding the entrant's name and number of entries and hitting submit.
 
 ~Does not work on Internet Explorer or Edge due to lack of support for the .flat() method.~ Fixed - 2/20/2019
 
-![sample](https://user-images.githubusercontent.com/42519030/53701452-8923f000-3dcb-11e9-8d2e-69ca8b2d2452.gif)
-
+<p align="center">
+  <img src="https://user-images.githubusercontent.com/42519030/53701452-8923f000-3dcb-11e9-8d2e-69ca8b2d2452.gif"</img>
+</p>
