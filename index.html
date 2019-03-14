@@ -26,21 +26,24 @@
     <div class="jumbotron-fluid jumbo">
       <h1 class="text-center title text-light">Simple Raffle</h1>
       <h6 class="text-center title text-light">randomizes multiple times</h6>
+      <!--START BUTTONS ROW-->
       <div class="row justify-content-center">
         <button class="text-center mt-2 btn btn-outline-success save-btn">
           Save
         </button>
-        <button class="ml-2 text-center mt-2 btn btn-outline-primary get-btn">
+        <button class="ml-2 text-center mt-2 btn btn-outline-primary load-btn">
           Load
         </button>
         <button id="reset" class="ml-2 mt-2 btn btn-outline-danger reset-btn">
           Reset
         </button>
       </div>
+      <!--END BUTTONS ROW-->
     </div>
     <div class="container">
       <div class="row">
         <div class="col-12">
+          <!--START DISPLAY DATA-->
           <div class="pad">
             <h2 id="total-entries" class="text-center mb-4"></h2>
             <div class="row justify-content-center">
@@ -53,8 +56,10 @@
             </div>
             <h1 id="winner" class="text-center"></h1>
           </div>
+          <!--END DISPLAY DATA-->
         </div>
       </div>
+      <!--START FORM-->
       <div class="row justify-content-center">
         <div class="col-md-8 col-12">
           <div class="card bg-light mt-2">
@@ -118,8 +123,9 @@
           </div>
         </div>
       </div>
+      <!--END ROW-->
     </div>
-    <div class="spacer"></div>
+    <!--START SAVE MODAL-->
     <div class="modal save-modal" tabindex="-1" role="dialog">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -154,7 +160,8 @@
         </div>
       </div>
     </div>
-    <div class="modal get-modal" tabindex="-1" role="dialog">
+    <!--START LOAD MODAL-->
+    <div class="modal load-modal" tabindex="-1" role="dialog">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
@@ -176,14 +183,15 @@
             </p>
             <div class="load-msg"></div>
             <div class="modal-footer">
-              <button class="btn-secondary btn get-data">
-                Load Raffle Data
+              <button class="btn-secondary btn load-data">
+                Load Raffle
               </button>
             </div>
           </div>
         </div>
       </div>
     </div>
+    <!--START RESET MODAL-->
     <div class="modal reset-modal" tabindex="-1" role="dialog">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -218,6 +226,7 @@
         </div>
       </div>
     </div>
+    <div class="spacer"></div>
     <footer class="text-center p-1 mt-2 sticky-footer">
       <a href="https://github.com/jhadev/raffle" target="_blank"
         ><i class="text-light fab fa-github icon-large"></i

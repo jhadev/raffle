@@ -248,11 +248,11 @@ $(".save-btn").on("click", event => {
 })
 
 //load button launches modal, empties message div, and removes refresh button. button exists on main page.
-$(".get-btn").on("click", event => {
+$(".load-btn").on("click", event => {
   event.preventDefault();
   $("#no-save").empty()
   $(".refresh").remove()
-  $(".get-modal").modal()
+  $(".load-modal").modal()
 })
 
 //displays inside modal. save button click launches save modal, initializes flatArray and saves to local storage if the array isn't empty.
@@ -271,8 +271,7 @@ $(".save").on("click", event => {
 
 //load button inside modal. if raffle array is empty and local storage has saved data it will parse the data, push it it into the raffle array, run the functions for odds and count, and display to the user that saved data has been loaded. If local storage is empty it will display a message to the user that no save data was found. If the raffle array has items in it and local storage has saved data a message will display to the user that they need to refresh the page to load their save and add a button to refresh page. 
 
-$(".get-data").on("click", event => {
-  // $(".get-modal").modal("hide")
+$(".load-data").on("click", event => {
   event.preventDefault();
   const savedRaffle = localStorage.getItem("raffle");
   if (raffleArray.length === 0 && savedRaffle !== null) {
@@ -296,7 +295,6 @@ $(".get-data").on("click", event => {
 //will refresh the page. only displayed if saved data is found but the raffleArray is not empty.
 $(document).on("click", ".refresh",
   event => {
-    // $(".get-modal").modal("hide")
     event.preventDefault();
     window.location.reload()
   })
