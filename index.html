@@ -27,11 +27,14 @@
       <h1 class="text-center title text-light">Simple Raffle</h1>
       <h6 class="text-center title text-light">randomizes multiple times</h6>
       <div class="row justify-content-center">
-        <button class="text-center my-2 btn btn-outline-success save-btn">
-          Save Entries
+        <button class="text-center mt-2 btn btn-outline-success save-btn">
+          Save
         </button>
-        <button class="ml-2 text-center my-2 btn btn-outline-primary get-btn">
-          Retrieve Entries
+        <button class="ml-2 text-center mt-2 btn btn-outline-primary get-btn">
+          Load
+        </button>
+        <button id="reset" class="ml-2 mt-2 btn btn-outline-danger reset-btn">
+          Reset
         </button>
       </div>
     </div>
@@ -109,11 +112,6 @@
                 >
                   <i class="fas fa-dice"></i>
                   Pick Winner
-                </button>
-              </div>
-              <div class="row">
-                <button id="reset" class="ml-3 btn btn-outline-danger mt-2">
-                  Reset
                 </button>
               </div>
             </div>

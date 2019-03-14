@@ -14,7 +14,8 @@ body {
 }
 
 .get-btn,
-.save-btn {
+.save-btn,
+.reset-btn {
   color: white;
 }
 
