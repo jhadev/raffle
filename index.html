@@ -137,11 +137,18 @@
           <div class="modal-body">
             <p>
               Save your data to local storage so you don't have to enter it
-              again. Remember to reset first before saving a new raffle.
+              again. Saving a new raffle will overwrite your last save. If you
+              want to add more entries to your existing save, refresh the page,
+              load your save, add entries and save.
             </p>
-            <button class="btn btn-secondary mr-auto save">
-              Save Raffle Data
-            </button>
+            <div class="modal-footer">
+              <button class="btn btn-danger delete">
+                Delete Last Save
+              </button>
+              <button class="btn btn-secondary save">
+                Save Raffle Data
+              </button>
+            </div>
           </div>
         </div>
       </div>
@@ -166,7 +173,11 @@
               this on page load. If you have already entered new items, this
               will not add to them.
             </p>
-            <button class="btn-secondary btn get-data">Load Raffle Data</button>
+            <div class="modal-footer">
+              <button class="btn-secondary btn get-data">
+                Load Raffle Data
+              </button>
+            </div>
           </div>
         </div>
       </div>

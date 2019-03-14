@@ -231,6 +231,11 @@ $("#reset").on("click", event => {
   localStorage.clear()
 });
 
+$(".delete").on("click", event => {
+  event.preventDefault();
+  localStorage.clear()
+});
+
 $(".save-btn").on("click", (event) => {
   event.preventDefault();
   $(".save-modal").modal()
