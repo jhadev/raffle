@@ -1,10 +1,10 @@
-$(document).ready(function() {
+$(document).ready(function () {
   validate();
 });
 
 //validate upon page load to handle errors
 function validate() {
-  $("#entries, #entrant-name").keyup(function() {
+  $("#entries, #entrant-name").keyup(function () {
     if ($(this).val() == "") {
       $(".enable").prop("disabled", true);
     } else {
@@ -28,7 +28,7 @@ const randomize = array => {
 //function for progress bar animation
 const animateProgressBar = () => {
   let currentProgress = 0;
-  const interval = setInterval(function() {
+  const interval = setInterval(function () {
     currentProgress += getRandomInt(25, 50);
     $("#dynamic")
       .css("width", currentProgress + "%")
@@ -54,14 +54,17 @@ const handleEntry = (name, entries) => {
   const newName = `${name},`;
   const repeatedName = newName.repeat(entries);
   const fullEntry = repeatedName.slice(0, -1).split(",");
+  console.log(fullEntry)
   raffleArray.push(fullEntry);
   $("#entrant-name, #entries").val("");
+  console.log(raffleArray)
 };
 
 //function for calculating the odds of winning for each entrant and writing it to the page.
 const handleOdds = () => {
   //$("#chance").html(`Odds<hr>`);
   const flatArray = raffleArray.reduce((a, b) => a.concat(b), []);
+  // localStorage.setItem("raffle", JSON.stringify(flatArray))
   const randomizedArray = randomize(flatArray);
   const entrantTotal = randomizedArray.reduce((obj, item) => {
     obj[item] = (obj[item] || 0) + 1;
@@ -149,7 +152,10 @@ const doSubmit = () => {
     $("#chance").empty();
     animateProgressBar();
     handleEntry(name, entries);
-    const { entrantTotal, flatArray } = handleOdds();
+    const {
+      entrantTotal,
+      flatArray
+    } = handleOdds();
     handleCount(entrantTotal, flatArray);
   } else {
     handleErrors();
@@ -192,17 +198,17 @@ const resetEntries = () => {
 const className = color => {
   let classes = "badge badge-";
   classes +=
-    color == "green"
-      ? "success"
-      : color == "red"
-      ? "danger"
-      : color == "white"
-      ? "light"
-      : color == "yellow"
-      ? "warning"
-      : color == "blue"
-      ? "primary"
-      : "dark";
+    color == "green" ?
+    "success" :
+    color == "red" ?
+    "danger" :
+    color == "white" ?
+    "light" :
+    color == "yellow" ?
+    "warning" :
+    color == "blue" ?
+    "primary" :
+    "dark";
   return classes;
 };
 
@@ -225,4 +231,45 @@ $("#pick-winner").on("click", event => {
 $("#reset").on("click", event => {
   event.preventDefault();
   resetEntries();
+  localStorage.clear()
+});
+
+$(".save-btn").on("click", (event) => {
+  event.preventDefault();
+  $(".save-modal").modal()
+})
+
+$(".get-btn").on("click", (event) => {
+  event.preventDefault();
+  $(".get-modal").modal()
+})
+
+$(".save").on("click", (event) => {
+  $(".save-modal").modal("hide")
+  event.preventDefault();
+  const flatArray = raffleArray.reduce((a, b) => a.concat(b), []);
+  if (flatArray.length > 1) {
+    localStorage.setItem("raffle", JSON.stringify(flatArray))
+  } else {
+    return null
+  }
+});
+
+$(".get-data").on("click", event => {
+  $(".get-modal").modal("hide")
+  event.preventDefault();
+  // $(".pad").empty()
+  if (raffleArray.length === 0) {
+    let namesList = JSON.parse(localStorage.getItem("raffle"))
+    console.log(namesList)
+    raffleArray.push(namesList)
+    console.log(raffleArray)
+    const {
+      entrantTotal,
+      flatArray
+    } = handleOdds();
+    handleCount(entrantTotal, flatArray);
+  } else {
+    return null
+  }
 });
