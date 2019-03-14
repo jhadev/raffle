@@ -54,17 +54,14 @@ const handleEntry = (name, entries) => {
   const newName = `${name},`;
   const repeatedName = newName.repeat(entries);
   const fullEntry = repeatedName.slice(0, -1).split(",");
-  console.log(fullEntry)
   raffleArray.push(fullEntry);
   $("#entrant-name, #entries").val("");
-  console.log(raffleArray)
 };
 
 //function for calculating the odds of winning for each entrant and writing it to the page.
 const handleOdds = () => {
   //$("#chance").html(`Odds<hr>`);
   const flatArray = raffleArray.reduce((a, b) => a.concat(b), []);
-  // localStorage.setItem("raffle", JSON.stringify(flatArray))
   const randomizedArray = randomize(flatArray);
   const entrantTotal = randomizedArray.reduce((obj, item) => {
     obj[item] = (obj[item] || 0) + 1;
@@ -250,8 +247,6 @@ $(".save").on("click", (event) => {
   const flatArray = raffleArray.reduce((a, b) => a.concat(b), []);
   if (flatArray.length > 1) {
     localStorage.setItem("raffle", JSON.stringify(flatArray))
-  } else {
-    return null
   }
 });
 
@@ -259,17 +254,13 @@ $(".get-data").on("click", event => {
   $(".get-modal").modal("hide")
   event.preventDefault();
   // $(".pad").empty()
-  if (raffleArray.length === 0) {
+  if (raffleArray.length === 0 && localStorage.getItem("raffle") !== null) {
     let namesList = JSON.parse(localStorage.getItem("raffle"))
-    console.log(namesList)
     raffleArray.push(namesList)
-    console.log(raffleArray)
     const {
       entrantTotal,
       flatArray
     } = handleOdds();
     handleCount(entrantTotal, flatArray);
-  } else {
-    return null
   }
 });
