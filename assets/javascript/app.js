@@ -288,7 +288,7 @@ $(".load-data").on("click", event => {
   } else if (raffleArray.length !== 0 && savedRaffle !== null) {
     $(".load-msg").html(`<p id="no-save"><b>Saved data found. Refresh the page before loading the saved raffle.</b></p>`)
     $(".refresh").remove()
-    $(".modal-footer").append(`<button class="btn btn-primary refresh">Refresh Page</button>`)
+    $(".load-footer").append(`<button class="btn btn-primary refresh">Refresh Page</button>`)
   }
 });
 
