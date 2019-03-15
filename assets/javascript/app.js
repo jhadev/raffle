@@ -1,10 +1,10 @@
-$(document).ready(function () {
+$(document).ready(function() {
   validate();
 });
 
 //validate upon page load to handle errors
 function validate() {
-  $("#entries, #entrant-name").keyup(function () {
+  $("#entries, #entrant-name").keyup(function() {
     if ($(this).val() == "") {
       $(".enable").prop("disabled", true);
     } else {
@@ -25,10 +25,10 @@ const randomize = array => {
   return array;
 };
 
-//function for progress bar animation
+//function for progress bar animation.
 const animateProgressBar = () => {
   let currentProgress = 0;
-  const interval = setInterval(function () {
+  const interval = setInterval(function() {
     currentProgress += getRandomInt(25, 50);
     $("#dynamic")
       .css("width", currentProgress + "%")
@@ -44,12 +44,12 @@ const animateProgressBar = () => {
   }, 1000);
 };
 
-//function to get random number
+//function to get random number.
 const getRandomInt = (min, max) => {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 };
 
-//function to count, format and push entries into the raffleArray
+//function to count, format and push entries into the raffleArray.
 const handleEntry = (name, entries) => {
   const newName = `${name},`;
   const repeatedName = newName.repeat(entries);
@@ -60,7 +60,6 @@ const handleEntry = (name, entries) => {
 
 //function for calculating the odds of winning for each entrant and writing it to the page.
 const handleOdds = () => {
-  //$("#chance").html(`Odds<hr>`);
   const flatArray = raffleArray.reduce((a, b) => a.concat(b), []);
   const randomizedArray = randomize(flatArray);
   const entrantTotal = randomizedArray.reduce((obj, item) => {
@@ -149,10 +148,7 @@ const doSubmit = () => {
     $("#chance").empty();
     animateProgressBar();
     handleEntry(name, entries);
-    const {
-      entrantTotal,
-      flatArray
-    } = handleOdds();
+    const { entrantTotal, flatArray } = handleOdds();
     handleCount(entrantTotal, flatArray);
   } else {
     handleErrors();
@@ -195,17 +191,17 @@ const resetEntries = () => {
 const className = color => {
   let classes = "badge badge-";
   classes +=
-    color == "green" ?
-    "success" :
-    color == "red" ?
-    "danger" :
-    color == "white" ?
-    "light" :
-    color == "yellow" ?
-    "warning" :
-    color == "blue" ?
-    "primary" :
-    "dark";
+    color == "green"
+      ? "success"
+      : color == "red"
+      ? "danger"
+      : color == "white"
+      ? "light"
+      : color == "yellow"
+      ? "warning"
+      : color == "blue"
+      ? "primary"
+      : "dark";
   return classes;
 };
 
@@ -225,35 +221,35 @@ $("#pick-winner").on("click", event => {
   }
 });
 
-//resets everything. all current entries and clears local storage. button exists on main page.
+//resets everything, all current entries and clears local storage. button exists on main page.
 $("#reset").on("click", event => {
   event.preventDefault();
-  $(".reset-modal").modal()
+  $(".reset-modal").modal();
   resetEntries();
-  localStorage.clear()
+  localStorage.clear();
 });
 
-//clears local storage and gives message to user. button exists inside save modal
+//clears local storage and gives message to user. button exists inside save modal.
 $(".delete").on("click", event => {
   event.preventDefault();
-  $(".save-msg").html(`<p><b>Saved data has been deleted.</b></p>`)
-  localStorage.clear()
+  $(".save-msg").html(`<p><b>Saved data has been deleted.</b></p>`);
+  localStorage.clear();
 });
 
 //launches save modal. button exists on main page.
 $(".save-btn").on("click", event => {
   event.preventDefault();
-  $(".save-modal").modal()
-  $(".save-msg").empty()
-})
+  $(".save-modal").modal();
+  $(".save-msg").empty();
+});
 
 //load button launches modal, empties message div, and removes refresh button. button exists on main page.
 $(".load-btn").on("click", event => {
   event.preventDefault();
-  $("#no-save").empty()
-  $(".refresh").remove()
-  $(".load-modal").modal()
-})
+  $("#no-save").empty();
+  $(".refresh").remove();
+  $(".load-modal").modal();
+});
 
 //displays inside modal. save button click launches save modal, initializes flatArray and saves to local storage if the array isn't empty.
 
@@ -261,40 +257,42 @@ $(".save").on("click", event => {
   // $(".save-modal").modal("hide")
   event.preventDefault();
   const flatArray = raffleArray.reduce((a, b) => a.concat(b), []);
-  if (flatArray.length > 1) {
-    localStorage.setItem("raffle", JSON.stringify(flatArray))
-    $(".save-msg").html(`<p><b>Success! Raffle has been saved.</b></p>`)
+  if (flatArray.length > 0) {
+    localStorage.setItem("raffle", JSON.stringify(flatArray));
+    $(".save-msg").html(`<p><b>Success! Raffle has been saved.</b></p>`);
   } else {
-    $(".save-msg").html(`<p><b>No entries found. Add entries first.</b></p>`)
+    $(".save-msg").html(`<p><b>No entries found. Add entries first.</b></p>`);
   }
 });
 
-//load button inside modal. if raffle array is empty and local storage has saved data it will parse the data, push it it into the raffle array, run the functions for odds and count, and display to the user that saved data has been loaded. If local storage is empty it will display a message to the user that no save data was found. If the raffle array has items in it and local storage has saved data a message will display to the user that they need to refresh the page to load their save and add a button to refresh page. 
+//load button inside modal. if raffle array is empty and local storage has saved data it will parse the data, push it it into the raffle array, run the functions for odds and count, and display to the user that saved data has been loaded. If local storage is empty it will display a message to the user that no save data was found. If the raffle array has items in it and local storage has saved data a message will display to the user that they need to refresh the page to load their save and add a button to refresh page.
 
 $(".load-data").on("click", event => {
   event.preventDefault();
   const savedRaffle = localStorage.getItem("raffle");
   if (raffleArray.length === 0 && savedRaffle !== null) {
-    let namesList = JSON.parse(savedRaffle)
-    raffleArray.push(namesList)
-    const {
-      entrantTotal,
-      flatArray
-    } = handleOdds();
+    let namesList = JSON.parse(savedRaffle);
+    raffleArray.push(namesList);
+    const { entrantTotal, flatArray } = handleOdds();
     handleCount(entrantTotal, flatArray);
-    $(".load-msg").html(`<p id="no-save"><b>Saved raffle has been loaded.</b></p>`)
+    $(".load-msg").html(
+      `<p id="no-save"><b>Saved raffle has been loaded.</b></p>`
+    );
   } else if (savedRaffle === null) {
-    $(".load-msg").html(`<p id="no-save"><b>No save data found.</b></p>`)
+    $(".load-msg").html(`<p id="no-save"><b>No save data found.</b></p>`);
   } else if (raffleArray.length !== 0 && savedRaffle !== null) {
-    $(".load-msg").html(`<p id="no-save"><b>Saved data found. Refresh the page before loading the saved raffle.</b></p>`)
-    $(".refresh").remove()
-    $(".load-footer").append(`<button class="btn btn-primary refresh">Refresh Page</button>`)
+    $(".load-msg").html(
+      `<p id="no-save"><b>Saved data found. Refresh the page before loading the saved raffle.</b></p>`
+    );
+    $(".refresh").remove();
+    $(".load-footer").append(
+      `<button class="btn btn-primary refresh">Refresh Page</button>`
+    );
   }
 });
 
 //will refresh the page. only displayed if saved data is found but the raffleArray is not empty.
-$(document).on("click", ".refresh",
-  event => {
-    event.preventDefault();
-    window.location.reload()
-  })
+$(document).on("click", ".refresh", event => {
+  event.preventDefault();
+  window.location.reload();
+});
