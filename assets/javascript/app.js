@@ -113,31 +113,24 @@ const handleCount = (entrantTotal, flatArray) => {
     .split(",");
   formattedEntryCount.forEach(count => {
     let id = count.substring(0, count.indexOf(":"));
-    $("#count")
-      .append(
-        `<div id="${id.trim()}" class="names m-1 ${className(
-          "white"
-        )}">${count.trim()}</div><hr>`
-      )
-      .addClass(`border-left border-right border-light`);
+    if (flatArray.length > 0) {
+      $("#count")
+        .append(
+          `<span id="${id.trim()}" class="delete-entry m-1 ml-3 float-left ${className(
+            "red"
+          )}" value="${id.trim()}">X</span><div class="names m-1 ${className(
+            "white"
+          )}">${count.trim()}</div><hr>`
+        )
+        .addClass(`border-left border-right border-light`);
+    }
   });
-
   $("#total-entries").html(
     `<div class="${className("blue")}">Total Entries: ${flatArray.length}</div>`
   );
   $("#pick-winner").prop("disabled", false);
   $(".alert").alert("close");
 };
-
-// $(document).on("click", ".names", event => {
-//   $("#count, #chance").empty();
-//   const { id } = event.target;
-//   const array = raffleArray.reduce((a, b) => a.concat(b), []);
-//   const filteredArray = array.filter(name => name !== id);
-//   raffleArray = filteredArray;
-//   const { entrantTotal, flatArray } = handleOdds();
-//   handleCount(entrantTotal, flatArray);
-// });
 
 //writes if error is found on submission.
 const handleErrors = () => {
@@ -311,6 +304,19 @@ $(".load-data").on("click", event => {
       `<button class="btn btn-primary refresh">Refresh Page</button>`
     );
   }
+});
+
+//displays next to entry counts, matches id with name in array, filters out the name, sets the main array to the filtered array, and runs the odds and count functions.
+$(document).on("click", ".delete-entry", event => {
+  $("#count, #chance").empty();
+  const { id, value } = event.target;
+  const array = raffleArray.reduce((a, b) => a.concat(b), []);
+  const filteredArray = array.filter(name => name !== id);
+  raffleArray = filteredArray;
+  const { entrantTotal, flatArray } = handleOdds();
+  handleCount(entrantTotal, flatArray);
+  let spanId = `#${id}`;
+  $(spanId).hide();
 });
 
 //will refresh the page. only displayed if saved data is found but the raffleArray is not empty.

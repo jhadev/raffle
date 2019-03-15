@@ -19,6 +19,10 @@ body {
   color: white;
 }
 
+/* .delete-entry {
+  float: right;
+} */
+
 .jumbotron {
   background: transparent !important;
 }
