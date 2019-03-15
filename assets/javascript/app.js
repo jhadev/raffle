@@ -232,8 +232,15 @@ $("#reset").on("click", event => {
 //clears local storage and gives message to user. button exists inside save modal.
 $(".delete").on("click", event => {
   event.preventDefault();
-  $(".save-msg").html(`<p><b>Saved data has been deleted.</b></p>`);
-  localStorage.clear();
+  const savedRaffle = localStorage.getItem("raffle");
+  if (savedRaffle) {
+    $(".save-msg").html(`<p><b>Saved data has been deleted.</b></p>`);
+    localStorage.clear();
+  } else {
+    $(".save-msg").html(
+      `<p><b>It's fun to click buttons, but there is nothing to delete.</b></p>`
+    );
+  }
 });
 
 //launches save modal. button exists on main page.
@@ -270,7 +277,7 @@ $(".save").on("click", event => {
 $(".load-data").on("click", event => {
   event.preventDefault();
   const savedRaffle = localStorage.getItem("raffle");
-  if (raffleArray.length === 0 && savedRaffle !== null) {
+  if (raffleArray.length === 0 && savedRaffle) {
     let namesList = JSON.parse(savedRaffle);
     raffleArray.push(namesList);
     const { entrantTotal, flatArray } = handleOdds();
@@ -278,9 +285,9 @@ $(".load-data").on("click", event => {
     $(".load-msg").html(
       `<p id="no-save"><b>Saved raffle has been loaded.</b></p>`
     );
-  } else if (savedRaffle === null) {
+  } else if (!savedRaffle) {
     $(".load-msg").html(`<p id="no-save"><b>No save data found.</b></p>`);
-  } else if (raffleArray.length !== 0 && savedRaffle !== null) {
+  } else if (raffleArray.length !== 0 && savedRaffle) {
     $(".load-msg").html(
       `<p id="no-save"><b>Saved data found. Refresh the page before loading the saved raffle.</b></p>`
     );
