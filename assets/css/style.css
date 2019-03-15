@@ -19,9 +19,9 @@ body {
   color: white;
 }
 
-/* .delete-entry {
-  float: right;
-} */
+.delete-entry {
+  cursor: pointer;
+}
 
 .jumbotron {
   background: transparent !important;
