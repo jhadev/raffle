@@ -112,15 +112,16 @@ const handleCount = (entrantTotal, flatArray) => {
     .replace(/ :/g, ": ")
     .split(",");
   formattedEntryCount.forEach(count => {
+    count = count.trim();
     let id = count.substring(0, count.indexOf(":"));
     if (flatArray.length > 0) {
       $("#count")
         .append(
-          `<span id="${id.trim()}" class="delete-entry m-1 ml-3 float-left ${className(
+          `<span id="${id}" class="delete-entry m-1 ml-3 float-left ${className(
             "red"
-          )}" value="${id.trim()}">X</span><div class="names m-1 ${className(
+          )}" value="${id}">X</span><div class="names m-1 ${className(
             "white"
-          )}">${count.trim()}</div><hr>`
+          )}">${count}</div><hr>`
         )
         .addClass(`border-left border-right border-light`);
     }
@@ -170,7 +171,9 @@ const pickWinner = () => {
   const winner = random[getRandomInt(0, random.length - 1)];
   const interval = window.setInterval(() => {
     const tickerRandom = random[getRandomInt(0, random.length - 1)];
-    $("#winner").html(`<div class="${className("red")}">${tickerRandom}</div>`);
+    $("#winner").html(
+      `<div class="${className("blue")}">${tickerRandom}</div>`
+    );
     window.setTimeout(() => {
       clearInterval(interval);
     }, 5000);
