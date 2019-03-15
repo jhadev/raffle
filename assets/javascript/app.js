@@ -305,7 +305,7 @@ $(".load-data").on("click", event => {
 
 //displays next to entry counts, matches id with name in array, filters out the name, sets the main array to the filtered array, and runs the odds and count functions.
 $(document).on("click", ".delete-entry", event => {
-  $("#count, #chance").empty();
+  $("#count, #chance, #winner").empty();
   const { id, value } = event.target;
   const array = raffleArray.reduce((a, b) => a.concat(b), []);
   const filteredArray = array.filter(name => name !== id);
