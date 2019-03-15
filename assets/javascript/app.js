@@ -131,9 +131,7 @@ const handleCount = (entrantTotal, flatArray) => {
     if (flatArray.length > 0) {
       $("#count")
         .append(
-          `<span id="${id}" class="delete-entry m-1 ml-3 float-left ${className(
-            "red"
-          )}" value="${id}">X</span><div class="names m-1 ${className(
+          `<span id="${id}" class="delete-entry m-1 ml-3 float-left btn btn-sm btn-outline-light" value="${id}">X</span><div class="names m-1 ${className(
             "white"
           )}">${count}</div><hr>`
         )

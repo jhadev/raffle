@@ -21,6 +21,9 @@ body {
 
 .delete-entry {
   cursor: pointer;
+  font-size: 14px;
+  color: white;
+  font-weight: bold;
 }
 
 .jumbotron {
@@ -68,6 +71,10 @@ hr {
   .alert {
     font-size: 12px;
     cursor: pointer;
+  }
+
+  .delete-entry {
+    font-size: 10px;
   }
 
   #chance,
