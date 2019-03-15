@@ -2,7 +2,7 @@ $(document).ready(function() {
   validate();
 });
 
-//validate upon page load to handle errors
+// validate upon page load to handle errors
 function validate() {
   $("#entries, #entrant-name").keyup(function() {
     if ($(this).val() == "") {
@@ -13,10 +13,10 @@ function validate() {
   });
 }
 
-//declare empty raffle array
+// declare empty raffle array
 let raffleArray = [];
 
-//function to randomize array
+// function to randomize array
 const randomize = array => {
   for (let i = array.length - 1; i > 0; i--) {
     let j = Math.floor(Math.random() * (i + 1));
@@ -25,7 +25,7 @@ const randomize = array => {
   return array;
 };
 
-//function for progress bar animation.
+// function for progress bar animation.
 const animateProgressBar = () => {
   let currentProgress = 0;
   const interval = setInterval(function() {
@@ -44,37 +44,39 @@ const animateProgressBar = () => {
   }, 1000);
 };
 
-//function to get random number.
+// function to get random number.
 const getRandomInt = (min, max) => {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 };
 
-//function to repeat, format and push entries into the raffleArray.
+// function to repeat, format and push entries into the raffleArray.
 const handleEntry = (name, entries) => {
-  //adds a comma after the name
   const newName = `${name},`;
-  //repeats the name by the number of entries
+  // adds a comma after the name
   const repeatedName = newName.repeat(entries);
-  //returns an array of each name repeated like this ["josh", "josh", "josh"]
+  // repeats the name by the number of entries
   const fullEntry = repeatedName.slice(0, -1).split(",");
+  // returns an array of each name repeated like this ["josh", "josh", "josh"]
   raffleArray.push(fullEntry);
   $("#entrant-name, #entries").val("");
 };
 
-//function for calculating the odds of winning for each entrant and writing it to the page.
+// function for calculating the odds of winning for each entrant and writing it to the page.
 const handleOdds = () => {
-  //raffleArray is full of nested arrays that look like this [["josh", "josh"], ["kenny", "kenny"]]. This flattens it into one large array.
   const flatArray = raffleArray.reduce((a, b) => a.concat(b), []);
+  // raffleArray is full of nested arrays that look like this [["josh", "josh"], ["kenny", "kenny"]].
+  // This flattens it into one large array.
   const randomizedArray = randomize(flatArray);
-  //This counts every instance of a string in the randomizedArray and returns an object like this {josh: 2, kenny: 2}
   const entrantTotal = randomizedArray.reduce((obj, item) => {
     obj[item] = (obj[item] || 0) + 1;
     return obj;
   }, {});
-  //grabs only the values for each entrant
+  // This counts every instance of a string in the randomizedArray.
+  // Returns an object like this {josh: 2, kenny: 2}
   const totalValues = Object.values(entrantTotal);
-  //loops over values to calculate odds and print them to page.
+  // grabs only the values for each entrant
   totalValues.forEach(value => {
+    // loops over values to calculate odds and print them to page.
     const raffleOdds = ((value / flatArray.length) * 100).toFixed(2);
     if (raffleOdds > 50) {
       $("#chance")
@@ -108,23 +110,24 @@ const handleOdds = () => {
   };
 };
 
-//function to handle the total count for each entrant and write it to page along with the total entries
+// function to handle the total count for each entrant and write it to page along with the total entries
 const handleCount = (entrantTotal, flatArray) => {
   $("#count").empty();
-  //.html(`Entries<hr>`);
   const entryCount = JSON.stringify(entrantTotal);
-  //returns a stringified object from the handleOdds function where the keys are the names and the values are the count. ex. {"josh":5}
+  // returns a stringified object from the handleOdds function.
+  // the keys are the names and the values are the count. ex. {"josh":5}
   const formattedEntryCount = entryCount
     .slice(1, -1)
     .replace(/\"/g, " ")
     .replace(/ :/g, ": ")
     .split(",");
-  //returns an array of the entryCounts as strings formatted like this: [" josh: 5", " kelly: 6"]
+  // returns an array of the entryCounts as strings formatted like this: [" josh: 5", " kenny: 6"]
   formattedEntryCount.forEach(count => {
     count = count.trim();
-    //removes whitespace from from of formattedEntryCount
+    // removes whitespace from beginning of each formattedEntryCount
     let id = count.substring(0, count.indexOf(":"));
-    //returns the name as a string like "josh" by trimming the colon and anything after it. used to match id of count to delete button
+    // returns the name as a string like "josh" by trimming the colon and anything after it.
+    // used to match id of count to delete button and filter the array accordingly.
     if (flatArray.length > 0) {
       $("#count")
         .append(
@@ -144,7 +147,7 @@ const handleCount = (entrantTotal, flatArray) => {
   $(".alert").alert("close");
 };
 
-//writes if error is found on submission.
+// writes if error is found on submission.
 const handleErrors = () => {
   $("#entries, #entrant-name").val("");
   const alertDiv = $("<div>");
@@ -156,7 +159,7 @@ const handleErrors = () => {
   $(".form-group").append(alertDiv);
 };
 
-//function that bundles the other functions and validates the user's submission before executing.
+// function that bundles the other functions and validates the user's submission before executing.
 const doSubmit = () => {
   const name = $("#entrant-name")
     .val()
@@ -175,7 +178,7 @@ const doSubmit = () => {
   }
 };
 
-//function to pick a winner and create a ticker "animation" on the page before displaying the winner.
+// function to pick a winner and create a ticker "animation" on the page before displaying the winner.
 const pickWinner = () => {
   const flatArray = raffleArray.reduce((a, b) => a.concat(b), []);
   const random = randomize(flatArray);
@@ -197,7 +200,7 @@ const pickWinner = () => {
   }, 5100);
 };
 
-//function to reset entries
+// function to reset entries
 const resetEntries = () => {
   raffleArray = [];
   flatArray = [];
@@ -209,7 +212,7 @@ const resetEntries = () => {
   $("#pick-winner").prop("disabled", true);
 };
 
-//function for quickly writing bootstrap badge color classes
+// function for quickly writing bootstrap badge color classes
 const className = color => {
   let classes = "badge badge-";
   classes +=
@@ -227,7 +230,7 @@ const className = color => {
   return classes;
 };
 
-//click functions
+// click functions
 $("#submit").on("click", event => {
   event.preventDefault();
   doSubmit();
@@ -240,7 +243,8 @@ $("#pick-winner").on("click", event => {
   }
 });
 
-//resets everything, all current entries and clears local storage. button exists on main page.
+// resets everything, all current entries and clears local storage.
+// button exists on main page.
 $("#reset").on("click", event => {
   event.preventDefault();
   $(".reset-modal").modal();
@@ -248,7 +252,8 @@ $("#reset").on("click", event => {
   localStorage.clear();
 });
 
-//clears local storage and gives message to user. button exists inside save modal.
+// clears local storage and gives message to user.
+// button exists inside save modal.
 $(".delete").on("click", event => {
   event.preventDefault();
   const savedRaffle = localStorage.getItem("raffle");
@@ -262,14 +267,14 @@ $(".delete").on("click", event => {
   }
 });
 
-//launches save modal. button exists on main page.
+// launches save modal. button exists on main page.
 $(".save-btn").on("click", event => {
   event.preventDefault();
   $(".save-modal").modal();
   $(".save-msg").empty();
 });
 
-//load button launches modal, empties message div, and removes refresh button. button exists on main page.
+// load button launches modal, empties message div, and removes refresh button. button exists on main page.
 $(".load-btn").on("click", event => {
   event.preventDefault();
   $("#no-save").empty();
@@ -277,7 +282,8 @@ $(".load-btn").on("click", event => {
   $(".load-modal").modal();
 });
 
-//displays inside modal. save button click launches save modal, initializes flatArray and saves to local storage if the array isn't empty.
+// displays inside modal. save button click launches save modal,
+// initializes flatArray and saves to local storage if the array isn't empty.
 
 $(".save").on("click", event => {
   // $(".save-modal").modal("hide")
@@ -291,7 +297,15 @@ $(".save").on("click", event => {
   }
 });
 
-//load button inside modal. if raffle array is empty and local storage has saved data it will parse the data, push it it into the raffle array, run the functions for odds and count, and display to the user that saved data has been loaded. If local storage is empty it will display a message to the user that no save data was found. If the raffle array has items in it and local storage has saved data a message will display to the user that they need to refresh the page to load their save and add a button to refresh page.
+// load button inside modal.
+// if raffle array is empty and local storage has saved data it will parse the data,
+// push it it into the raffle array,
+// run the functions for odds and count,
+// and display to the user that saved data has been loaded.
+// If local storage is empty it will display a message to the user that no save data was found.
+// If the raffle array has items in it
+// and local storage has saved data a message will display to the user that they need to refresh the page
+// to load their save and add a button to refresh page.
 
 $(".load-data").on("click", event => {
   event.preventDefault();
@@ -317,7 +331,8 @@ $(".load-data").on("click", event => {
   }
 });
 
-//displays next to entry counts, matches id with name in array, filters out the name, sets the main array to the filtered array, and runs the odds and count functions.
+// displays next to entry counts, matches id with name in array,
+// filters out the name, sets the main array to the filtered array, and runs the odds and count functions.
 $(document).on("click", ".delete-entry", event => {
   $("#count, #chance, #winner").empty();
   const { id, value } = event.target;
@@ -334,7 +349,8 @@ $(document).on("click", ".delete-entry", event => {
     .text("");
 });
 
-//will refresh the page. only displayed if saved data is found but the raffleArray is not empty.
+// will refresh the page.
+// only displayed if saved data is found but the raffleArray is not empty.
 $(document).on("click", ".refresh", event => {
   event.preventDefault();
   window.location.reload();
