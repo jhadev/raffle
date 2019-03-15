@@ -221,10 +221,7 @@ $("#submit").on("click", event => {
 
 $("#pick-winner").on("click", event => {
   event.preventDefault();
-  //unused error handling. disabling the button instead.
-  if (raffleArray.length === 0) {
-    $(".modal").modal();
-  } else {
+  if (raffleArray.length > 0) {
     pickWinner();
   }
 });
@@ -317,6 +314,10 @@ $(document).on("click", ".delete-entry", event => {
   handleCount(entrantTotal, flatArray);
   let spanId = `#${id}`;
   $(spanId).hide();
+  $(".progress-bar")
+    .css("width", "0%")
+    .attr("aria-valuenow", 0)
+    .text("");
 });
 
 //will refresh the page. only displayed if saved data is found but the raffleArray is not empty.
