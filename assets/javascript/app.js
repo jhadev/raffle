@@ -49,10 +49,13 @@ const getRandomInt = (min, max) => {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 };
 
-//function to count, format and push entries into the raffleArray.
+//function to repeat, format and push entries into the raffleArray.
 const handleEntry = (name, entries) => {
+  //adds a comma after the name
   const newName = `${name},`;
+  //repeats the name by the number of entries
   const repeatedName = newName.repeat(entries);
+  //returns an array of each name repeated like this ["josh", "josh", "josh"]
   const fullEntry = repeatedName.slice(0, -1).split(",");
   raffleArray.push(fullEntry);
   $("#entrant-name, #entries").val("");
@@ -60,13 +63,17 @@ const handleEntry = (name, entries) => {
 
 //function for calculating the odds of winning for each entrant and writing it to the page.
 const handleOdds = () => {
+  //raffleArray is full of nested arrays that look like this [["josh", "josh"], ["kenny", "kenny"]]. This flattens it into one large array.
   const flatArray = raffleArray.reduce((a, b) => a.concat(b), []);
   const randomizedArray = randomize(flatArray);
+  //This counts every instance of a string in the randomizedArray and returns an object like this {josh: 2, kenny: 2}
   const entrantTotal = randomizedArray.reduce((obj, item) => {
     obj[item] = (obj[item] || 0) + 1;
     return obj;
   }, {});
+  //grabs only the values for each entrant
   const totalValues = Object.values(entrantTotal);
+  //loops over values to calculate odds and print them to page.
   totalValues.forEach(value => {
     const raffleOdds = ((value / flatArray.length) * 100).toFixed(2);
     if (raffleOdds > 50) {
@@ -106,14 +113,18 @@ const handleCount = (entrantTotal, flatArray) => {
   $("#count").empty();
   //.html(`Entries<hr>`);
   const entryCount = JSON.stringify(entrantTotal);
+  //returns a stringified object from the handleOdds function where the keys are the names and the values are the count. ex. {"josh":5}
   const formattedEntryCount = entryCount
     .slice(1, -1)
     .replace(/\"/g, " ")
     .replace(/ :/g, ": ")
     .split(",");
+  //returns an array of the entryCounts as strings formatted like this: [" josh: 5", " kelly: 6"]
   formattedEntryCount.forEach(count => {
     count = count.trim();
+    //removes whitespace from from of formattedEntryCount
     let id = count.substring(0, count.indexOf(":"));
+    //returns the name as a string like "josh" by trimming the colon and anything after it. used to match id of count to delete button
     if (flatArray.length > 0) {
       $("#count")
         .append(
