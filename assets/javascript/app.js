@@ -112,8 +112,13 @@ const handleCount = (entrantTotal, flatArray) => {
     .replace(/ :/g, ": ")
     .split(",");
   formattedEntryCount.forEach(count => {
+    let id = count.substring(0, count.indexOf(":"));
     $("#count")
-      .append(`<div class="names m-1 ${className("white")}">${count}</div><hr>`)
+      .append(
+        `<div id="${id.trim()}" class="names m-1 ${className(
+          "white"
+        )}">${count.trim()}</div><hr>`
+      )
       .addClass(`border-left border-right border-light`);
   });
 
@@ -123,6 +128,16 @@ const handleCount = (entrantTotal, flatArray) => {
   $("#pick-winner").prop("disabled", false);
   $(".alert").alert("close");
 };
+
+// $(document).on("click", ".names", event => {
+//   $("#count, #chance").empty();
+//   const { id } = event.target;
+//   const array = raffleArray.reduce((a, b) => a.concat(b), []);
+//   const filteredArray = array.filter(name => name !== id);
+//   raffleArray = filteredArray;
+//   const { entrantTotal, flatArray } = handleOdds();
+//   handleCount(entrantTotal, flatArray);
+// });
 
 //writes if error is found on submission.
 const handleErrors = () => {
