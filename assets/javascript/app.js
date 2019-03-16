@@ -353,3 +353,8 @@ $(document).on("click", ".refresh", event => {
   event.preventDefault();
   window.location.reload();
 });
+
+$(document).on("click", "#clear-page", event => {
+  event.preventDefault();
+  window.location.reload();
+});
