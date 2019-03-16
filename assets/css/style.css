@@ -26,6 +26,11 @@ body {
   font-weight: bold;
 }
 
+#clear-page {
+  cursor: pointer;
+  font-size: 12px;
+}
+
 .jumbotron {
   background: transparent !important;
 }

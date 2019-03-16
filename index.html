@@ -29,12 +29,15 @@
       <!--START BUTTONS ROW-->
       <div class="row justify-content-center">
         <button class="text-center mt-2 btn btn-outline-success save-btn">
+          <i class="fas fa-upload"></i>
           Save
         </button>
         <button class="ml-2 text-center mt-2 btn btn-outline-primary load-btn">
+          <i class="fas fa-download"></i>
           Load
         </button>
         <button id="reset" class="ml-2 mt-2 btn btn-outline-danger reset-btn">
+          <i class="fas fa-trash-alt"></i>
           Reset
         </button>
       </div>
@@ -106,7 +109,7 @@
                   class="enable btn btn-primary"
                   disabled="disabled"
                 >
-                  <i class="fas fa-dice"></i> Submit
+                  <i class="fas fa-plus-square"></i>&nbsp Submit
                 </button>
               </form>
               <div class="row">
@@ -115,8 +118,13 @@
                   class="ml-3 btn btn-success mt-2"
                   disabled="disabled"
                 >
-                  <i class="fas fa-dice"></i>
-                  Pick Winner
+                  <i class="fas fa-dice"></i>&nbsp Pick Winner
+                </button>
+                <button
+                  id="clear-page"
+                  class="ml-auto mr-3 mt-2 btn btn-outline-danger refresh"
+                >
+                  <i class="fas fa-redo"></i>
                 </button>
               </div>
             </div>
