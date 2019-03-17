@@ -1,10 +1,10 @@
-$(document).ready(function() {
+$(document).ready(function () {
   validate();
 });
 
 // validate upon page load to handle errors
 function validate() {
-  $("#entries, #entrant-name").keyup(function() {
+  $("#entries, #entrant-name").keyup(function () {
     if ($(this).val() == "") {
       $(".enable").prop("disabled", true);
     } else {
@@ -28,7 +28,7 @@ const randomize = array => {
 // function for progress bar animation.
 const animateProgressBar = () => {
   let currentProgress = 0;
-  const interval = setInterval(function() {
+  const interval = setInterval(function () {
     currentProgress += getRandomInt(25, 50);
     $("#dynamic")
       .css("width", currentProgress + "%")
@@ -169,7 +169,10 @@ const doSubmit = () => {
     $("#chance").empty();
     animateProgressBar();
     handleEntry(name, entries);
-    const { entrantTotal, flatArray } = handleOdds();
+    const {
+      entrantTotal,
+      flatArray
+    } = handleOdds();
     handleCount(entrantTotal, flatArray);
   } else {
     handleErrors();
@@ -214,17 +217,17 @@ const resetEntries = () => {
 const className = color => {
   let classes = "badge badge-";
   classes +=
-    color == "green"
-      ? "success"
-      : color == "red"
-      ? "danger"
-      : color == "white"
-      ? "light"
-      : color == "yellow"
-      ? "warning"
-      : color == "blue"
-      ? "primary"
-      : "dark";
+    color == "green" ?
+    "success" :
+    color == "red" ?
+    "danger" :
+    color == "white" ?
+    "light" :
+    color == "yellow" ?
+    "warning" :
+    color == "blue" ?
+    "primary" :
+    "dark";
   return classes;
 };
 
@@ -289,7 +292,9 @@ $(".save").on("click", event => {
   const flatArray = raffleArray.reduce((a, b) => a.concat(b), []);
   if (flatArray.length > 0) {
     localStorage.setItem("raffle", JSON.stringify(flatArray));
-    $(".save-msg").html(`<p><b>Success! Raffle has been saved.</b></p>`);
+    let date = moment().format('LLL')
+    localStorage.setItem("date", JSON.stringify(date))
+    $(".save-msg").html(`<p><b>Success! Raffle has been saved on ${date}</b></p>`);
   } else {
     $(".save-msg").html(`<p><b>No entries found. Add entries first.</b></p>`);
   }
@@ -308,19 +313,24 @@ $(".save").on("click", event => {
 $(".load-data").on("click", event => {
   event.preventDefault();
   const savedRaffle = localStorage.getItem("raffle");
+  let savedDate = localStorage.getItem("date")
+  savedDate = JSON.parse(savedDate)
   if (raffleArray.length === 0 && savedRaffle) {
     let namesList = JSON.parse(savedRaffle);
     raffleArray.push(namesList);
-    const { entrantTotal, flatArray } = handleOdds();
+    const {
+      entrantTotal,
+      flatArray
+    } = handleOdds();
     handleCount(entrantTotal, flatArray);
     $(".load-msg").html(
-      `<p id="no-save"><b>Saved raffle has been loaded.</b></p>`
+      `<p id="no-save"><b>Saved raffle from ${savedDate} has been loaded.</b></p>`
     );
   } else if (!savedRaffle) {
     $(".load-msg").html(`<p id="no-save"><b>No save data found.</b></p>`);
   } else if (raffleArray.length !== 0 && savedRaffle) {
     $(".load-msg").html(
-      `<p id="no-save"><b>Saved data found. Refresh the page before loading the saved raffle.</b></p>`
+      `<p id="no-save"><b>Saved data from ${savedDate} has been found. Refresh the page before loading the saved raffle.</b></p>`
     );
     $(".refresh").remove();
     $(".load-footer").append(
@@ -333,11 +343,17 @@ $(".load-data").on("click", event => {
 // filters out the name, sets the main array to the filtered array, and runs the odds and count functions.
 $(document).on("click", ".delete-entry", event => {
   $("#count, #chance, #winner").empty();
-  const { id, value } = event.target;
+  const {
+    id,
+    value
+  } = event.target;
   const array = raffleArray.reduce((a, b) => a.concat(b), []);
   const filteredArray = array.filter(name => name !== id);
   raffleArray = filteredArray;
-  const { entrantTotal, flatArray } = handleOdds();
+  const {
+    entrantTotal,
+    flatArray
+  } = handleOdds();
   handleCount(entrantTotal, flatArray);
   let spanId = `#${id}`;
   $(spanId).hide();
