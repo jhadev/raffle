@@ -72,6 +72,10 @@ hr {
   font-family: "Roboto Slab", serif;
 }
 
+#winner {
+  font-size: 56px;
+}
+
 /* Customize website's scrollbar like Mac OS
 Not supports in Firefox and IE */
 
