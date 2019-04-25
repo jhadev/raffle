@@ -165,7 +165,7 @@ const doSubmit = () => {
   const entries = $("#entries")
     .val()
     .trim();
-  if (entries > 0 && entries != "" && name != "") {
+  if (entries > 0 && entries !== "" && name !== "") {
     $("#chance").empty();
     animateProgressBar();
     handleEntry(name, entries);
@@ -214,15 +214,15 @@ const resetEntries = () => {
 const className = color => {
   let classes = "badge badge-";
   classes +=
-    color == "green"
+    color === "green"
       ? "success"
-      : color == "red"
+      : color === "red"
       ? "danger"
-      : color == "white"
+      : color === "white"
       ? "light"
-      : color == "yellow"
+      : color === "yellow"
       ? "warning"
-      : color == "blue"
+      : color === "blue"
       ? "primary"
       : "dark";
   return classes;
