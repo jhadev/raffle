@@ -49,6 +49,10 @@ const getRandomInt = (min, max) => {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 };
 
+const flattenArray = arr => {
+  return arr.reduce((a, b) => a.concat(b), []);
+};
+
 // function to repeat, format and push entries into the raffleArray.
 const handleEntry = (name, entries) => {
   const newName = `${name},`;
@@ -63,7 +67,7 @@ const handleEntry = (name, entries) => {
 
 // function for calculating the odds of winning for each entrant and writing it to the page.
 const handleOdds = () => {
-  const flatArray = raffleArray.reduce((a, b) => a.concat(b), []);
+  const flatArray = flattenArray(raffleArray);
   // raffleArray is full of nested arrays that look like this [["josh", "josh"], ["kenny", "kenny"]].
   // This flattens it into one large array.
   const randomizedArray = randomize(flatArray);
@@ -178,7 +182,7 @@ const doSubmit = () => {
 
 // function to pick a winner and create a ticker "animation" on the page before displaying the winner.
 const pickWinner = () => {
-  const flatArray = raffleArray.reduce((a, b) => a.concat(b), []);
+  const flatArray = flattenArray(raffleArray);
   const random = randomize(flatArray);
   const winner = random[getRandomInt(0, random.length - 1)];
   const interval = window.setInterval(() => {
@@ -231,6 +235,7 @@ const className = color => {
 // click functions
 $('#submit').on('click', event => {
   event.preventDefault();
+  $('#winner').empty();
   doSubmit();
 });
 
@@ -286,7 +291,7 @@ $('.load-btn').on('click', event => {
 $('.save').on('click', event => {
   // $(".save-modal").modal("hide")
   event.preventDefault();
-  const flatArray = raffleArray.reduce((a, b) => a.concat(b), []);
+  const flatArray = flattenArray(raffleArray);
   if (flatArray.length > 0) {
     localStorage.setItem('raffle', JSON.stringify(flatArray));
     let date = moment().format('LLL');
@@ -340,7 +345,7 @@ $('.load-data').on('click', event => {
 $(document).on('click', '.delete-entry', event => {
   $('#count, #chance, #winner').empty();
   const { id, value } = event.target;
-  const array = raffleArray.reduce((a, b) => a.concat(b), []);
+  const array = flattenArray(raffleArray);
   const filteredArray = array.filter(name => name !== id);
   raffleArray = filteredArray;
   const { entrantTotal, flatArray } = handleOdds();
