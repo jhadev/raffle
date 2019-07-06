@@ -256,7 +256,6 @@ $('#pick-winner').on('click', event => {
 // resets everything, all current entries and clears local storage.
 // button exists on main page.
 $('#reset').on('click', event => {
-  event.preventDefault();
   $('.reset-modal').modal();
   resetEntries();
   localStorage.clear();
@@ -265,7 +264,6 @@ $('#reset').on('click', event => {
 // clears local storage and gives message to user.
 // button exists inside save modal.
 $('.delete').on('click', event => {
-  event.preventDefault();
   const savedRaffle = localStorage.getItem('raffle');
   if (savedRaffle) {
     $('.save-msg').html(`<p><b>Saved data has been deleted.</b></p>`);
@@ -279,14 +277,12 @@ $('.delete').on('click', event => {
 
 // launches save modal. button exists on main page.
 $('.save-btn').on('click', event => {
-  event.preventDefault();
   $('.save-modal').modal();
   $('.save-msg').empty();
 });
 
 // load button launches modal, empties message div, and removes refresh button. button exists on main page.
 $('.load-btn').on('click', event => {
-  event.preventDefault();
   $('#no-save').empty();
   $('.refresh').remove();
   $('.load-modal').modal();
@@ -297,7 +293,6 @@ $('.load-btn').on('click', event => {
 
 $('.save').on('click', event => {
   // $(".save-modal").modal("hide")
-  event.preventDefault();
   const flatArray = flattenArray(raffleArray);
   if (flatArray.length > 0) {
     localStorage.setItem('raffle', JSON.stringify(flatArray));
@@ -322,7 +317,6 @@ $('.save').on('click', event => {
 // to load their save and add a button to refresh page.
 
 $('.load-data').on('click', event => {
-  event.preventDefault();
   const savedRaffle = localStorage.getItem('raffle');
   let savedDate = localStorage.getItem('date');
   savedDate = JSON.parse(savedDate);
@@ -365,13 +359,7 @@ $(document).on('click', '.delete-entry', event => {
 });
 
 // will refresh the page.
-// only displayed if saved data is found but the raffleArray is not empty.
+// only displayed if saved data is found but the raffleArray is not empty and in the form.
 $(document).on('click', '.refresh', event => {
-  event.preventDefault();
-  window.location.reload();
-});
-
-$(document).on('click', '#clear-page', event => {
-  event.preventDefault();
   window.location.reload();
 });
