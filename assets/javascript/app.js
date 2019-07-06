@@ -1,5 +1,8 @@
 $(document).ready(function() {
   validate();
+  $('#total-entries')
+    .text('Add some entries or your load your save to get started.')
+    .addClass('text-light');
 });
 
 // validate upon page load to handle errors
@@ -49,9 +52,7 @@ const getRandomInt = (min, max) => {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 };
 
-const flattenArray = arr => {
-  return arr.reduce((a, b) => a.concat(b), []);
-};
+const flattenArray = arr => arr.reduce((a, b) => a.concat(b), []);
 
 // function to repeat, format and push entries into the raffleArray.
 const handleEntry = (name, entries) => {
@@ -129,7 +130,7 @@ const handleCount = (entrantTotal, flatArray) => {
   formattedEntryCount.forEach(count => {
     count = count.trim();
     // removes whitespace from beginning of each formattedEntryCount
-    let id = count.substring(0, count.indexOf(':'));
+    const id = count.substring(0, count.indexOf(':'));
     // returns the name as a string like "josh" by trimming the colon and anything after it.
     // used to match id of count to delete button and filter the array accordingly.
     if (flatArray.length > 0) {
@@ -143,7 +144,9 @@ const handleCount = (entrantTotal, flatArray) => {
     }
   });
   $('#total-entries').html(
-    `<div class="${className('blue')}">Total Entries: ${flatArray.length}</div>`
+    `<div class="${className('white')}">Total Entries: ${
+      flatArray.length
+    }</div>`
   );
   $('#pick-winner').prop('disabled', false);
   $('.alert').alert('close');
@@ -182,31 +185,35 @@ const doSubmit = () => {
 
 // function to pick a winner and create a ticker "animation" on the page before displaying the winner.
 const pickWinner = () => {
+  $('#pick-winner').prop('disabled', true);
   const flatArray = flattenArray(raffleArray);
   const random = randomize(flatArray);
   const winner = random[getRandomInt(0, random.length - 1)];
   const interval = window.setInterval(() => {
     const tickerRandom = random[getRandomInt(0, random.length - 1)];
     $('#winner').html(
-      `<div class="${className('blue')}">${tickerRandom}</div>`
+      `<div class="${className('white')}">${tickerRandom}</div>`
     );
     window.setTimeout(() => {
       clearInterval(interval);
     }, 5000);
-  }, 5100 / flatArray.length);
+  }, 100);
   animateProgressBar();
   setTimeout(() => {
     $('#winner').html(
       `<div class="${className('green')}">The winner is ${winner}!</div>`
     );
+    $('#pick-winner').prop('disabled', false);
   }, 5100);
 };
 
 // function to reset entries
 const resetEntries = () => {
   raffleArray = [];
-  flatArray = [];
   $('#total-entries, #count, #chance, #winner').empty();
+  $('#total-entries')
+    .text('Add some entries or your load your save to get started.')
+    .addClass('text-light');
   $('.progress-bar')
     .css('width', '0%')
     .attr('aria-valuenow', 0)
@@ -294,7 +301,7 @@ $('.save').on('click', event => {
   const flatArray = flattenArray(raffleArray);
   if (flatArray.length > 0) {
     localStorage.setItem('raffle', JSON.stringify(flatArray));
-    let date = moment().format('LLL');
+    const date = moment().format('LLL');
     localStorage.setItem('date', JSON.stringify(date));
     $('.save-msg').html(
       `<p><b>Success! Raffle has been saved on ${date}</b></p>`
@@ -320,7 +327,7 @@ $('.load-data').on('click', event => {
   let savedDate = localStorage.getItem('date');
   savedDate = JSON.parse(savedDate);
   if (raffleArray.length === 0 && savedRaffle) {
-    let namesList = JSON.parse(savedRaffle);
+    const namesList = JSON.parse(savedRaffle);
     raffleArray.push(namesList);
     const { entrantTotal, flatArray } = handleOdds();
     handleCount(entrantTotal, flatArray);
@@ -346,11 +353,10 @@ $(document).on('click', '.delete-entry', event => {
   $('#count, #chance, #winner').empty();
   const { id, value } = event.target;
   const array = flattenArray(raffleArray);
-  const filteredArray = array.filter(name => name !== id);
-  raffleArray = filteredArray;
+  raffleArray = array.filter(name => name !== id);
   const { entrantTotal, flatArray } = handleOdds();
   handleCount(entrantTotal, flatArray);
-  let spanId = `#${id}`;
+  const spanId = `#${id}`;
   $(spanId).hide();
   $('.progress-bar')
     .css('width', '0%')
