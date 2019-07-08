@@ -52,26 +52,29 @@ const getRandomInt = (min, max) => {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 };
 
-const flattenArray = arr => arr.reduce((a, b) => a.concat(b), []);
+const capitalizeEveryWord = str =>
+  str.replace(/\b[a-z]/g, char => char.toUpperCase());
 
 // function to repeat, format and push entries into the raffleArray.
 const handleEntry = (name, entries) => {
+  name = capitalizeEveryWord(name);
   const newName = `${name},`;
   // adds a comma after the name
   const repeatedName = newName.repeat(entries);
   // repeats the name by the number of entries
   const fullEntry = repeatedName.slice(0, -1).split(',');
   // returns an array of each name repeated like this ["josh", "josh", "josh"]
-  raffleArray.push(fullEntry);
+  fullEntry.forEach(entry => {
+    raffleArray.push(entry);
+  });
   $('#entrant-name, #entries').val('');
 };
 
 // function for calculating the odds of winning for each entrant and writing it to the page.
 const handleOdds = () => {
-  const flatArray = flattenArray(raffleArray);
-  // raffleArray is full of nested arrays that look like this [["josh", "josh"], ["kenny", "kenny"]].
+  const raffleClone = [...raffleArray];
   // This flattens it into one large array.
-  const randomizedArray = randomize(flatArray);
+  const randomizedArray = randomize(raffleClone);
   const entrantTotal = randomizedArray.reduce((obj, item) => {
     obj[item] = (obj[item] || 0) + 1;
     return obj;
@@ -82,7 +85,7 @@ const handleOdds = () => {
   // grabs only the values for each entrant
   totalValues.forEach(value => {
     // loops over values to calculate odds and print them to page.
-    const raffleOdds = ((value / flatArray.length) * 100).toFixed(2);
+    const raffleOdds = ((value / raffleClone.length) * 100).toFixed(2);
     if (raffleOdds > 50) {
       $('#chance')
         .append(
@@ -111,12 +114,12 @@ const handleOdds = () => {
   });
   return {
     entrantTotal,
-    flatArray
+    raffleClone
   };
 };
 
 // function to handle the total count for each entrant and write it to page along with the total entries
-const handleCount = (entrantTotal, flatArray) => {
+const handleCount = (entrantTotal, raffleClone) => {
   $('#count').empty();
   const entryCount = JSON.stringify(entrantTotal);
   // returns a stringified object from the handleOdds function.
@@ -133,7 +136,7 @@ const handleCount = (entrantTotal, flatArray) => {
     const id = count.substring(0, count.indexOf(':'));
     // returns the name as a string like "josh" by trimming the colon and anything after it.
     // used to match id of count to delete button and filter the array accordingly.
-    if (flatArray.length > 0) {
+    if (raffleClone.length > 0) {
       $('#count')
         .append(
           `<span id="${id}" class="delete-entry m-1 ml-3 float-left btn btn-sm btn-outline-light" value="${id}">X</span><div class="names m-1 ${className(
@@ -145,7 +148,7 @@ const handleCount = (entrantTotal, flatArray) => {
   });
   $('#total-entries').html(
     `<div class="${className('white')}">Total Entries: ${
-      flatArray.length
+      raffleClone.length
     }</div>`
   );
   $('#pick-winner').prop('disabled', false);
@@ -176,8 +179,8 @@ const doSubmit = () => {
     $('#chance').empty();
     animateProgressBar();
     handleEntry(name, entries);
-    const { entrantTotal, flatArray } = handleOdds();
-    handleCount(entrantTotal, flatArray);
+    const { entrantTotal, raffleClone } = handleOdds();
+    handleCount(entrantTotal, raffleClone);
   } else {
     handleErrors();
   }
@@ -186,8 +189,8 @@ const doSubmit = () => {
 // function to pick a winner and create a ticker "animation" on the page before displaying the winner.
 const pickWinner = () => {
   $('#pick-winner').prop('disabled', true);
-  const flatArray = flattenArray(raffleArray);
-  const random = randomize(flatArray);
+  const raffleClone = [...raffleArray];
+  const random = randomize(raffleClone);
   const winner = random[getRandomInt(0, random.length - 1)];
   const interval = window.setInterval(() => {
     const tickerRandom = random[getRandomInt(0, random.length - 1)];
@@ -289,13 +292,13 @@ $('.load-btn').on('click', event => {
 });
 
 // displays inside modal. save button click launches save modal,
-// initializes flatArray and saves to local storage if the array isn't empty.
+// initializes raffleClone and saves to local storage if the array isn't empty.
 
 $('.save').on('click', event => {
   // $(".save-modal").modal("hide")
-  const flatArray = flattenArray(raffleArray);
-  if (flatArray.length > 0) {
-    localStorage.setItem('raffle', JSON.stringify(flatArray));
+  const raffleClone = [...raffleArray];
+  if (raffleClone.length > 0) {
+    localStorage.setItem('raffle', JSON.stringify(raffleClone));
     const date = moment().format('LLL');
     localStorage.setItem('date', JSON.stringify(date));
     $('.save-msg').html(
@@ -322,9 +325,11 @@ $('.load-data').on('click', event => {
   savedDate = JSON.parse(savedDate);
   if (raffleArray.length === 0 && savedRaffle) {
     const namesList = JSON.parse(savedRaffle);
-    raffleArray.push(namesList);
-    const { entrantTotal, flatArray } = handleOdds();
-    handleCount(entrantTotal, flatArray);
+    namesList.forEach(name => {
+      raffleArray.push(name);
+    });
+    const { entrantTotal, raffleClone } = handleOdds();
+    handleCount(entrantTotal, raffleClone);
     $('.load-msg').html(
       `<p id="no-save"><b>Saved raffle from ${savedDate} has been loaded.</b></p>`
     );
@@ -346,10 +351,10 @@ $('.load-data').on('click', event => {
 $(document).on('click', '.delete-entry', event => {
   $('#count, #chance, #winner').empty();
   const { id, value } = event.target;
-  const array = flattenArray(raffleArray);
+  const array = [...raffleArray];
   raffleArray = array.filter(name => name !== id);
-  const { entrantTotal, flatArray } = handleOdds();
-  handleCount(entrantTotal, flatArray);
+  const { entrantTotal, raffleClone } = handleOdds();
+  handleCount(entrantTotal, raffleClone);
   const spanId = `#${id}`;
   $(spanId).hide();
   $('.progress-bar')
